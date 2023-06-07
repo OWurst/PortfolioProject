@@ -15,7 +15,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class UserTests {
     @Test
-    void constructorsReturnStartingCash() {
+    void testConstructorA() {
+        User user = new User("owen", "uname", "pw");
+        assertEquals(user.getPassword(), "pw");
+        assertEquals(user.getUsername(), "uname");
+        assertEquals(user.getName(), "owen");
+    }
+
+    @Test
+    void testConstructorB() {
+        User user = new User("owen", "uname", "pw", null);
+        assertEquals(user.getPassword(), "pw");
+        assertEquals(user.getUsername(), "uname");
+        assertEquals(user.getName(), "owen");
+    }
+
+    @Test
+    void testConstructorsReturnStartingCash() {
         User user1 = new User("", "", "");
 
         assertEquals(user1.getTotalCash(), User.STARTING_CASH);
@@ -38,5 +54,14 @@ public class UserTests {
         // constructor with email
         User user2 = new User("", "", "", "howdy@hello");
         assertEquals(user2.getEmail(), "howdy@hello");
+    }
+
+    @Test
+    void testSetCashAndSetWorth() {
+        User user = new User(null, null, null);
+        user.setTotalCash(100);
+        assertEquals(user.getTotalCash(), 100);
+        user.setTotalWorth(1000);
+        assertEquals(user.getTotalWorth(), 1000);
     }
 }

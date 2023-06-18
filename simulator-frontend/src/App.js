@@ -14,6 +14,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    let x = 
     this.getMsgs();
   }
 
@@ -43,10 +44,10 @@ class App extends Component {
         // TODO error handling
       })
   }
-  
+
   getFlask() {
     fetch(
-      'http://localhost:5000/flask',
+      'http://localhost:5000/flask/drive',
       {
         method: 'GET'
       }

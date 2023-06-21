@@ -1,16 +1,11 @@
 package OWurst.Investment_Simulator.EntityTests;
 
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import OWurst.Investment_Simulator.General_Objects.Entity.User;
-
-//  this file is my very first attempt at TDD, it will not be very elegant,
-//  but I want it to be rigid and adhere to the TDD principles
 
 @SpringBootTest
 public class UserTests {

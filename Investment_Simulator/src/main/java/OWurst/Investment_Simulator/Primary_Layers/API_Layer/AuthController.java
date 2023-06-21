@@ -34,7 +34,7 @@ public class AuthController {
         return userService.logoutUser(request);
     }
 
-    @GetMapping("/flex/get-username")
+    @GetMapping("/get-username")
     public ResponseEntity<String> getUsername(HttpServletRequest request) {
         return userService.getUsername(request);
     }

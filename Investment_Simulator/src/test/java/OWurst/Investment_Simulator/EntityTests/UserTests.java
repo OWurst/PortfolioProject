@@ -24,7 +24,7 @@ public class UserTests {
 
     @Test
     void testConstructorB() {
-        User user = new User("owen", "uname", "pw", null);
+        User user = new User(0, "owen", "uname", "pw", null);
         assertEquals(user.getPassword(), "pw");
         assertEquals(user.getUsername(), "uname");
         assertEquals(user.getName(), "owen");
@@ -37,7 +37,7 @@ public class UserTests {
         assertEquals(user1.getTotalCash(), User.STARTING_CASH);
         assertEquals(user1.getTotalWorth(), User.STARTING_CASH);
 
-        User user2 = new User("", "", "", "");
+        User user2 = new User(0, "", "", "", "");
 
         assertEquals(user2.getTotalCash(), User.STARTING_CASH);
         assertEquals(user2.getTotalWorth(), User.STARTING_CASH);
@@ -52,7 +52,7 @@ public class UserTests {
         assertEquals(user1.getEmail(), "email");
 
         // constructor with email
-        User user2 = new User("", "", "", "howdy@hello");
+        User user2 = new User(0, "", "", "", "howdy@hello");
         assertEquals(user2.getEmail(), "howdy@hello");
     }
 

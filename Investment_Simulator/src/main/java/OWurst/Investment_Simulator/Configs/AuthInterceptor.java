@@ -30,7 +30,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // User id is in session and db, continue to handle request
+        // // User id is in session and db, continue to handle request
         return true;
     }
 }

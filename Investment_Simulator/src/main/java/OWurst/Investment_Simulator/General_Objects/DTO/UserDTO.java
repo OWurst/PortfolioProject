@@ -15,10 +15,18 @@ public class UserDTO {
         // Empty constructor
     }
 
-    public UserDTO(int id, String username, String password) {
+    public UserDTO(int id, String username, String password, String name, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.email = email;
+    }
+
+    public UserDTO(int id, double totalCash, double totalWorth) {
+        this.id = id;
+        this.totalCash = totalCash;
+        this.totalWorth = totalWorth;
     }
 
     public int getId() {

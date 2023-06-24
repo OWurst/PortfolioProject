@@ -1,0 +1,17 @@
+package OWurst.Investment_Simulator.Service_Layer;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
+
+import OWurst.Investment_Simulator.DTO.LoginDTO;
+import OWurst.Investment_Simulator.DTO.UserDTO;
+
+public interface UserService {
+    public ResponseEntity<String> addUser(UserDTO userDTO, HttpServletRequest request);
+
+    public ResponseEntity<String> getUsername(HttpServletRequest request);
+
+    public ResponseEntity<String> loginUser(LoginDTO loginDTO, HttpServletRequest request);
+
+    public ResponseEntity<String> logoutUser(HttpServletRequest request);
+}

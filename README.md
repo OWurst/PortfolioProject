@@ -6,6 +6,8 @@ For the front end, I will be using React.js. This frontend server will depend on
 I am working as a software engineering intern this summer and will be a full time student in the fall, so it has been quite difficult to find time for this project and it will continue to be quite difficult. Hopefully I can carve out a little time each day, but it is going to be hard to build this project in 30min-1hr increments, even if I am working on it nearly every day. Also, I have virtually no experience developing ML, and both flask and spring have only been used to create simple school projects, so I am going to have to work pretty hard to keep my head above water on this project and avoid smashing my computer into a million tiny pieces.
 ##  Project Management
 ### Contact
-Email me at omw3@pitt.edu
+If you are interested in taking part in this project, please email me at omw3@pitt.edu
 ### Trello
-Check out my [Trello Board](https://trello.com/b/uBXwmjyn/investmentproject-trello) to see progress and immediate plans.
+To see open user stories, sprint information and long term goals check out my [Trello Board](https://trello.com/b/uBXwmjyn/investmentproject-trello) to see progress and immediate plans.
+### Design
+To better understand implementation plans as well as completed implementation, please checkout my [project diagrams](https://github.com/OWurst/PortfolioProject/tree/main/Diagrams#readme).

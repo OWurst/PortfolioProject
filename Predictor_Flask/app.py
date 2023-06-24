@@ -7,6 +7,9 @@ from AlgoDriver import Algo
 app = Flask(__name__)
 CORS(app)
 
+#   I am expecting this to eventually be a server that serves exactly two GET requests: one to get some number of top predicted stocks,
+#   and one to get some number of bottom predicted stocks
+
 @app.route('/flask')
 def howdy():
     response_body = "{\"msg\":\"hello from flask\"}"

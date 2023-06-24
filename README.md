@@ -8,4 +8,4 @@ I am working as a software engineering intern this summer and will be a full tim
 ### Contact
 Email me at omw3@pitt.edu
 ### Trello
-Check out my Trello Board to see progress and immediate plans https://trello.com/b/uBXwmjyn/investmentproject-trello
+Check out my [Trello Board](https://trello.com/b/uBXwmjyn/investmentproject-trello) to see progress and immediate plans.

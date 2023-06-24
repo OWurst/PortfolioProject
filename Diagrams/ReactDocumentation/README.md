@@ -1,0 +1,2 @@
+# React Documentation
+Because I am focusing on the Core Services portion of the project first, this portion of the project will likely not be implemented or even thought about intensively for at least a couple weeks. If you are interested in frontend development (at any skill level) please reach out using the information in the [base README](https://github.com/OWurst/PortfolioProject/tree/main#readme).

@@ -1,0 +1,2 @@
+# Python Documentation
+Because I am focusing on the Core Services portion of the project first, this portion of the project will be on the backburner until I am largely done working on the Java Spring portion of the project and have spent at the very least enough time working on the frontend that I am happy with the general site structure and . If you are interested in ML or Data Science (at any skill level) please reach out using the information in the [base README](https://github.com/OWurst/PortfolioProject/tree/main#readme).

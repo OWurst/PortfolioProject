@@ -2,15 +2,20 @@ package OWurst.Investment_Simulator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import OWurst.Investment_Simulator.DTO.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import OWurst.Investment_Simulator.General_Objects.DTO.*;
+//  while I do not expect this testing suite to ever be relevant, it is a simple safeguard to remind me to update DTOs should
+//  I ever change one of the classes they are used for and add/remove variables 06/23/2023
 
+@SpringBootTest
 public class DTOTesting {
-
     @Test
     void runTestsForAllDTOs() {
         LoginDTOTests.runTests("user", "pass");
+        UserDTOTests.runTests("user", "pass", "name", "email", 0, 100.0);
     }
 
     private class LoginDTOTests {
@@ -42,7 +47,60 @@ public class DTOTesting {
     }
 
     private class UserDTOTests {
-        void runTests() {
+        static UserDTO inConstructor;
+        static UserDTO outConstructor;
+
+        static int id;
+
+        static String name;
+        static String username;
+        static String password;
+        static String email;
+        static double totalCash;
+        static double totalWorth;
+
+        private static void runTests(String inUser, String inPass, String inName, String inEmail, int inId,
+                double inCash) {
+            name = inName;
+            password = inPass;
+            username = inUser;
+            email = inEmail;
+            totalCash = inCash;
+            totalWorth = inCash + 100.0;
+            id = inId;
+
+            inConstructor = new UserDTO(id, username, password, name, email);
+            outConstructor = new UserDTO(id, totalCash, totalWorth);
+
+            testInConstructor();
+            testOutConstructor();
+            testGetAndSetCash();
+        }
+
+        private static void testInConstructor() {
+            assertEquals(name, inConstructor.getName());
+            assertEquals(username, inConstructor.getUsername());
+            assertEquals(id, inConstructor.getId());
+            assertEquals(password, inConstructor.getPassword());
+            assertEquals(email, inConstructor.getEmail());
+        }
+
+        private static void testOutConstructor() {
+            assertEquals(id, outConstructor.getId());
+            assertEquals(totalCash, outConstructor.getTotalCash());
+            assertEquals(totalWorth, outConstructor.getTotalWorth());
+            assertEquals(null, outConstructor.getUsername());
+        }
+
+        private static void testGetAndSetCash() {
+            assertEquals(0.0, inConstructor.getTotalWorth());
+            assertEquals(0.0, inConstructor.getTotalCash());
+
+            inConstructor.setTotalCash(totalCash);
+            inConstructor.setTotalWorth(totalWorth);
+
+            assertEquals(totalWorth, inConstructor.getTotalWorth());
+            assertEquals(totalCash, inConstructor.getTotalCash());
         }
     }
 }

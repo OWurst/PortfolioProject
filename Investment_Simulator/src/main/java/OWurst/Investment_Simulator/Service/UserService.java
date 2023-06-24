@@ -1,4 +1,4 @@
-package OWurst.Investment_Simulator.Service_Layer;
+package OWurst.Investment_Simulator.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;

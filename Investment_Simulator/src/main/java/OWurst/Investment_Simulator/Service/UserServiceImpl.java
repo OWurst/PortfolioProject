@@ -1,4 +1,4 @@
-package OWurst.Investment_Simulator.Service_Layer;
+package OWurst.Investment_Simulator.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

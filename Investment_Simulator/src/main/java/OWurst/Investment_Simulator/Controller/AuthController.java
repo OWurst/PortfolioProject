@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
-import OWurst.Investment_Simulator.Service_Layer.UserService;
+import OWurst.Investment_Simulator.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController

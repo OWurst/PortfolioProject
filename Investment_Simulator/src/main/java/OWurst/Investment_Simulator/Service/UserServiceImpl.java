@@ -3,7 +3,7 @@ package OWurst.Investment_Simulator.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // @Autowired
-    // PasswordEncoder passwordEncoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseEntity<String> addUser(UserDTO userDTO, HttpServletRequest request) {
@@ -30,8 +30,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByUsername(userDTO.getUsername()) == null) {
             // Create new user and add to repository
             User user = new User(userDTO.getId(), userDTO.getName(), userDTO.getUsername(),
-                    // this.passwordEncoder.encode()
-                    userDTO.getPassword(), userDTO.getEmail());
+                    this.passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail());
             userRepository.save(user);
 
             // Add username and id to sessions

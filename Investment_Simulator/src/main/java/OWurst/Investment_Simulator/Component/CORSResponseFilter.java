@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /*
- * This is a filter that intercepts all requests at /flex/*
+ * This is a filter that intercepts all requests at /core/*
  * It sets CORS-related headers so that we can make requests that require authentication
  * It also catches preflight requests and returns an HTTP OK for them (tbh idk why we have to do this but apparently we do)
  */

@@ -37,6 +37,9 @@ public class User {
     @Column
     private double totalWorth;
 
+    public User() {
+    }
+
     public User(int id, String name, String username, String password, String email) {
         this.name = name;
         this.username = username;

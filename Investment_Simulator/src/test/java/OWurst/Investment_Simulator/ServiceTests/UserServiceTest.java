@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import OWurst.Investment_Simulator.Entity.User;
 
-public class UserServiceAndRepoTest {
+@SpringBootTest
+public class UserServiceTest {
 
 }

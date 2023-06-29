@@ -29,17 +29,25 @@ public class UserServiceImpl implements UserService {
         // Search to see if username is taken
         if (userRepository.findByUsername(userDTO.getUsername()) == null) {
             // Create new user and add to repository
-            User user = new User(userDTO.getId(), userDTO.getName(), userDTO.getUsername(),
-                    this.passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail());
-            userRepository.save(user);
+            if (userDTOFieldsAreAllLegal(userDTO)) {
+                User user = new User(userDTO.getId(), userDTO.getName(),
+                        userDTO.getUsername(),
+                        this.passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail());
 
-            // Add username and id to sessions
-            request.getSession().setAttribute("USERNAME", user.getUsername());
-            request.getSession().setAttribute("USER_ID", user.getId());
+                userRepository.save(user);
 
-            // Update response to show success
-            body = "Registration successful";
-            status = HttpStatus.OK;
+                // Add username and id to sessions
+                request.getSession().setAttribute("USERNAME", user.getUsername());
+                request.getSession().setAttribute("USER_ID", user.getId());
+
+                // Update response to show success
+                body = "Registration successful";
+                status = HttpStatus.OK;
+                return new ResponseEntity<>(body, status);
+            } else {
+                body = "Registration unsuccessful: Please double check all fields";
+                status = HttpStatus.BAD_REQUEST;
+            }
         } else {
             // Update response to show failure
             body = "Registration unsuccessful: username already taken";
@@ -52,6 +60,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<String> getUsername(HttpServletRequest request) {
+        if (request == null) {
+            return new ResponseEntity<>("Error: Session could not be found.", HttpStatus.BAD_REQUEST);
+        }
+
         User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
         return new ResponseEntity<>(user.getUsername(), HttpStatus.OK);
     }
@@ -66,9 +78,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(loginDTO.getUsername());
 
         // If user found, authenticate password
-        if (user != null &&
-        // passwordEncoder.matches
-                (loginDTO.getPassword() == user.getPassword())) {
+        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             // Add username and id to sessions
             request.getSession().setAttribute("USERNAME", user.getUsername());
             request.getSession().setAttribute("USER_ID", user.getId());
@@ -104,5 +114,26 @@ public class UserServiceImpl implements UserService {
 
         // Return response
         return new ResponseEntity<>(body, status);
+    }
+
+    private boolean userDTOFieldsAreAllLegal(UserDTO userDTO) {
+        if (userDTO.getUsername() == null || userDTO.getUsername().equals("")) {
+            System.out.println("\n\nHmmm\n\n");
+            return false;
+        }
+        if (userDTO.getPassword() == null || userDTO.getPassword().equals("")) {
+            System.out.println("\n\na\n\n");
+            return false;
+        }
+        if (userDTO.getName() == null || userDTO.getName().equals("")) {
+            System.out.println("\n\nb\n\n");
+            return false;
+        }
+        if (userDTO.getEmail() == null || userDTO.getEmail().equals("")) {
+            System.out.println("\n\nc\n\n");
+            return false;
+        }
+
+        return true;
     }
 }

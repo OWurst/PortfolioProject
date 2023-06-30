@@ -13,7 +13,7 @@ import OWurst.Investment_Simulator.Entity.User;
 import OWurst.Investment_Simulator.Repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements AuthService, AccountService {
     @Autowired
     private UserRepository userRepository;
 
@@ -66,6 +66,24 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
         return new ResponseEntity<>(user.getUsername(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteUser(HttpServletRequest request) {
+        if (request == null) {
+            return new ResponseEntity<>("Error: Session could not be found.", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+            userRepository.delete(user);
+        }
+        // TODO figure out what the two exceptions are (one for username not found and
+        // one for failed delete, and handle errors separately)
+        catch (Exception e) {
+            return new ResponseEntity<>("Error: Delete failed", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("Success: Account deleted", HttpStatus.OK);
     }
 
     @Override

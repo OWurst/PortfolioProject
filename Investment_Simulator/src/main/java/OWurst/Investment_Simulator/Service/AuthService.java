@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 
-public interface UserService {
+public interface AuthService {
     public ResponseEntity<String> addUser(UserDTO userDTO, HttpServletRequest request);
 
     public ResponseEntity<String> getUsername(HttpServletRequest request);

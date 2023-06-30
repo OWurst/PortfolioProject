@@ -10,32 +10,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
-import OWurst.Investment_Simulator.Service.UserService;
+import OWurst.Investment_Simulator.Service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class AuthController {
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @PostMapping("/save")
     public ResponseEntity<String> saveUser(@RequestBody UserDTO userDTO, HttpServletRequest request) {
-        return userService.addUser(userDTO, request);
+        return authService.addUser(userDTO, request);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO, HttpServletRequest request) {
-        return userService.loginUser(loginDTO, request);
+        return authService.loginUser(loginDTO, request);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logoutUser(HttpServletRequest request) {
-        return userService.logoutUser(request);
+        return authService.logoutUser(request);
     }
 
     @GetMapping("/get-username")
     public ResponseEntity<String> getUsername(HttpServletRequest request) {
-        return userService.getUsername(request);
+        return authService.getUsername(request);
     }
 }

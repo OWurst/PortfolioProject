@@ -1,4 +1,4 @@
 package OWurst.Investment_Simulator.Repository;
 
-public class AssetRepository {
+public class StockRepository {
 }

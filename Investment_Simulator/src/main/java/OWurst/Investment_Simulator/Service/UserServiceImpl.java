@@ -29,6 +29,7 @@ public class UserServiceImpl implements AuthService, AccountService {
         // Search to see if username is taken
         if (userRepository.findByUsername(userDTO.getUsername()) == null) {
             // Create new user and add to repository
+
             if (userDTOFieldsAreAllLegal(userDTO)) {
                 User user = new User(userDTO.getId(), userDTO.getName(),
                         userDTO.getUsername(),

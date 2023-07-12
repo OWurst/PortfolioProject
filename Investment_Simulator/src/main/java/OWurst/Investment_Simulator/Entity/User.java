@@ -1,6 +1,8 @@
 package OWurst.Investment_Simulator.Entity;
 
-// import jakarta.persistence.CascadeType;
+//import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,10 +11,12 @@ import jakarta.persistence.Id;
 // import jakarta.persistence.JoinColumn;
 // import jakarta.persistence.OneToMany;
 // import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class User {
-    public static final double STARTING_CASH = 1000000.0;
+    public static final double STARTING_CASH = 100000.0;
 
     @Id
     @Column
@@ -20,7 +24,10 @@ public class User {
     private int id;
 
     @Column(length = 40, unique = false, nullable = false)
-    private String name;
+    private String firstName;
+
+    @Column(length = 40, unique = false, nullable = false)
+    private String lastName;
 
     @Column(length = 30, unique = true, nullable = false)
     private String username;
@@ -31,46 +38,40 @@ public class User {
     @Column(length = 40, unique = false, nullable = false)
     private String email;
 
-    @Column
-    private double totalCash;
-
-    @Column
-    private double totalWorth;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "asset_id", referencedColumnName = "id")
+    private Assets assets;
 
     public User() {
     }
 
-    public User(int id, String name, String username, String password, String email) {
-        this.name = name;
+    public User(String firstname, String lastname, String username, String password, String email) {
+        this.firstName = firstname;
+        this.lastName = lastname;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.totalCash = STARTING_CASH;
-        this.totalWorth = STARTING_CASH;
+        this.assets = new Assets();
     }
 
-    public User(String name, String username, String password) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.totalCash = STARTING_CASH;
-        this.totalWorth = STARTING_CASH;
+    public User(String firstname, String lastname, String username, String password) {
+        this(firstname, lastname, username, password, null);
+    }
+
+    public double getCash() {
+        return this.assets.getCash();
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setTotalCash(double totalCash) {
-        this.totalCash = totalCash;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setTotalWorth(double totalWorth) {
-        this.totalWorth = totalWorth;
-    }
-
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getUsername() {
@@ -83,14 +84,6 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public double getTotalCash() {
-        return totalCash;
-    }
-
-    public double getTotalWorth() {
-        return totalWorth;
     }
 
     public int getId() {

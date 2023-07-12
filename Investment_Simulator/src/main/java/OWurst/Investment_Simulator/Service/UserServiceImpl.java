@@ -31,7 +31,7 @@ public class UserServiceImpl implements AuthService, AccountService {
             // Create new user and add to repository
 
             if (userDTOFieldsAreAllLegal(userDTO)) {
-                User user = new User(userDTO.getId(), userDTO.getName(),
+                User user = new User(userDTO.getFirstname(), userDTO.getLastname(),
                         userDTO.getUsername(),
                         this.passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail());
 
@@ -136,6 +136,8 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     private boolean userDTOFieldsAreAllLegal(UserDTO userDTO) {
+        System.out.println("firstname = " + userDTO.getFirstname());
+        System.out.println("lastname = " + userDTO.getLastname());
         if (userDTO.getUsername() == null || userDTO.getUsername().equals("")) {
             System.out.println("\n\nHmmm\n\n");
             return false;
@@ -144,7 +146,11 @@ public class UserServiceImpl implements AuthService, AccountService {
             System.out.println("\n\na\n\n");
             return false;
         }
-        if (userDTO.getName() == null || userDTO.getName().equals("")) {
+        if (userDTO.getFirstname() == null || userDTO.getFirstname().equals("")) {
+            System.out.println("\n\nb\n\n");
+            return false;
+        }
+        if (userDTO.getLastname() == null || userDTO.getLastname().equals("")) {
             System.out.println("\n\nb\n\n");
             return false;
         }

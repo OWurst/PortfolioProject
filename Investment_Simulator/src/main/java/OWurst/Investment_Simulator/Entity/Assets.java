@@ -1,6 +1,7 @@
 package OWurst.Investment_Simulator.Entity;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,10 +26,11 @@ public class Assets {
 
     @OneToMany(cascade = CascadeType.ALL, targetEntity = Stock.class)
     @JoinColumn(name = "fk_assetId", referencedColumnName = "id")
-    private HashMap<String, Stock> stockSet;
+    private List<Stock> stockSet;
 
     public Assets() {
         this.cash = 100000.00;
+        stockSet = null;
     }
 
     public double getCash() {

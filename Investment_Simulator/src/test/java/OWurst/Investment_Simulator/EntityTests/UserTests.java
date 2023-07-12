@@ -11,52 +11,43 @@ import OWurst.Investment_Simulator.Entity.User;
 public class UserTests {
     @Test
     void testConstructorA() {
-        User user = new User("owen", "uname", "pw");
+        User user = new User("owen", "wurst", "uname", "pw");
         assertEquals(user.getPassword(), "pw");
         assertEquals(user.getUsername(), "uname");
-        assertEquals(user.getName(), "owen");
+        assertEquals(user.getFirstName(), "owen");
+        assertEquals(user.getLastName(), "wurst");
     }
 
     @Test
     void testConstructorB() {
-        User user = new User(0, "owen", "uname", "pw", null);
+        User user = new User("owen", "wurst", "uname", "pw", null);
         assertEquals(user.getPassword(), "pw");
         assertEquals(user.getUsername(), "uname");
-        assertEquals(user.getName(), "owen");
+        assertEquals(user.getFirstName(), "owen");
+        assertEquals(user.getLastName(), "wurst");
     }
 
     @Test
     void testConstructorsReturnStartingCash() {
-        User user1 = new User("", "", "");
+        User user1 = new User("", "", "", "");
 
-        assertEquals(user1.getTotalCash(), User.STARTING_CASH);
-        assertEquals(user1.getTotalWorth(), User.STARTING_CASH);
+        assertEquals(user1.getCash(), User.STARTING_CASH);
 
-        User user2 = new User(0, "", "", "", "");
+        User user2 = new User("", "", "", "");
 
-        assertEquals(user2.getTotalCash(), User.STARTING_CASH);
-        assertEquals(user2.getTotalWorth(), User.STARTING_CASH);
+        assertEquals(user2.getCash(), User.STARTING_CASH);
     }
 
     @Test
     void testSetAndGetEmail() {
         // constructor without email
-        User user1 = new User("", "", "");
-        assertEquals(user1.getEmail(), null);
+        User user1 = new User("", "", "", "");
+        assertEquals(null, user1.getEmail());
         user1.setEmail("email");
         assertEquals(user1.getEmail(), "email");
 
         // constructor with email
-        User user2 = new User(0, "", "", "", "howdy@hello");
+        User user2 = new User("", "", "", "", "howdy@hello");
         assertEquals(user2.getEmail(), "howdy@hello");
-    }
-
-    @Test
-    void testSetCashAndSetWorth() {
-        User user = new User(null, null, null);
-        user.setTotalCash(100);
-        assertEquals(user.getTotalCash(), 100);
-        user.setTotalWorth(1000);
-        assertEquals(user.getTotalWorth(), 1000);
     }
 }

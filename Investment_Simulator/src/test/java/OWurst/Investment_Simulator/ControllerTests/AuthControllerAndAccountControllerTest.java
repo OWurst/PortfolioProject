@@ -38,7 +38,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(2)
     public void testSaveUserReturnsOKOnNormalInput() {
-        UserDTO testDTO = new UserDTO(0, "user", "pass", "name", "email@");
+        UserDTO testDTO = new UserDTO("user", "pass", "firstname", "lastname", "email@");
         ResponseEntity<String> response = authController.saveUser(testDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -46,7 +46,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(3)
     public void testSaveUserFailsOnSameUsername() {
-        UserDTO testDTO = new UserDTO(0, "user", "pass", "name", "email@");
+        UserDTO testDTO = new UserDTO("user", "pass", "firstname", "lastname", "email@");
         ResponseEntity<String> response = authController.saveUser(testDTO, request);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -54,10 +54,10 @@ public class AuthControllerAndAccountControllerTest {
     @Order(4)
     @Test
     void testSaveUserFailsOnNoPasswordOrNoUsername() {
-        UserDTO badUserDTO = new UserDTO(1, "userski", "", "Bobby", "x@x");
+        UserDTO badUserDTO = new UserDTO("userski", "", "Bobby", "Fishcher", "x@x");
         ResponseEntity<String> response = authController.saveUser(badUserDTO, request);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        badUserDTO = new UserDTO(1, "", "pass", "Bobby", "x@x");
+        badUserDTO = new UserDTO("", "pass", "Bobby", "Fischer", "x@x");
         response = authController.saveUser(badUserDTO, request);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -65,10 +65,10 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(5)
     void testSaveUserFailsOnNoEmailOrNoName() {
-        UserDTO userDTO = new UserDTO(1, "userooni", "billiam", "", "x@x");
+        UserDTO userDTO = new UserDTO("userooni", "billiam", "ridderson", "", "x@x");
         ResponseEntity<String> response = authController.saveUser(userDTO, request);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        userDTO = new UserDTO(1, "userooni", "billiam", "oweno", "");
+        userDTO = new UserDTO("userooni", "billiam", "oweno", "fletch", "");
         response = authController.saveUser(userDTO, request);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }

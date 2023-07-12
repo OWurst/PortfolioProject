@@ -15,7 +15,7 @@ public class DTOTesting {
     @Test
     void runTestsForAllDTOs() {
         LoginDTOTests.runTests("user", "pass");
-        UserDTOTests.runTests("user", "pass", "name", "email", 0, 100.0);
+        UserDTOTests.runTests("user", "pass", "firstname", "lastname", "email", 0);
     }
 
     private class LoginDTOTests {
@@ -52,55 +52,36 @@ public class DTOTesting {
 
         static int id;
 
-        static String name;
+        static String firstname;
+        static String lastname;
         static String username;
         static String password;
         static String email;
         static double totalCash;
         static double totalWorth;
 
-        private static void runTests(String inUser, String inPass, String inName, String inEmail, int inId,
-                double inCash) {
-            name = inName;
+        private static void runTests(String inUser, String inPass, String inFirstName, String inLastName,
+                String inEmail, int inId) {
+            firstname = inFirstName;
+            lastname = inLastName;
+
             password = inPass;
             username = inUser;
             email = inEmail;
-            totalCash = inCash;
-            totalWorth = inCash + 100.0;
             id = inId;
 
-            inConstructor = new UserDTO(id, username, password, name, email);
-            outConstructor = new UserDTO(id, totalCash, totalWorth);
+            inConstructor = new UserDTO(username, password, firstname, lastname, email);
 
             testInConstructor();
-            testOutConstructor();
-            testGetAndSetCash();
         }
 
         private static void testInConstructor() {
-            assertEquals(name, inConstructor.getName());
+            assertEquals(firstname, inConstructor.getFirstname());
+            assertEquals(lastname, inConstructor.getLastname());
             assertEquals(username, inConstructor.getUsername());
             assertEquals(id, inConstructor.getId());
             assertEquals(password, inConstructor.getPassword());
             assertEquals(email, inConstructor.getEmail());
-        }
-
-        private static void testOutConstructor() {
-            assertEquals(id, outConstructor.getId());
-            assertEquals(totalCash, outConstructor.getTotalCash());
-            assertEquals(totalWorth, outConstructor.getTotalWorth());
-            assertEquals(null, outConstructor.getUsername());
-        }
-
-        private static void testGetAndSetCash() {
-            assertEquals(0.0, inConstructor.getTotalWorth());
-            assertEquals(0.0, inConstructor.getTotalCash());
-
-            inConstructor.setTotalCash(totalCash);
-            inConstructor.setTotalWorth(totalWorth);
-
-            assertEquals(totalWorth, inConstructor.getTotalWorth());
-            assertEquals(totalCash, inConstructor.getTotalCash());
         }
     }
 }

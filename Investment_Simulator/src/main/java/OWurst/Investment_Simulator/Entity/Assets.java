@@ -30,7 +30,7 @@ public class Assets {
 
     public Assets() {
         this.cash = 100000.00;
-        stockSet = null;
+        stockSet = new ArrayList<Stock>();
     }
 
     public double getCash() {

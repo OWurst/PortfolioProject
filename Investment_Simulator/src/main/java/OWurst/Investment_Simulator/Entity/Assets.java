@@ -1,6 +1,7 @@
 package OWurst.Investment_Simulator.Entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -35,5 +36,9 @@ public class Assets {
 
     public double getCash() {
         return cash;
+    }
+
+    public void addStock(Stock stock) {
+        stockSet.add(stock);
     }
 }

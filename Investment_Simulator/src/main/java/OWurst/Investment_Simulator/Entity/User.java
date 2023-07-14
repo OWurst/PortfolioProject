@@ -89,4 +89,8 @@ public class User {
     public int getId() {
         return id;
     }
+
+    public Assets getAssets() {
+        return assets;
+    }
 }

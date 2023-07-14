@@ -1,6 +1,6 @@
 package OWurst.Investment_Simulator.Entity;
 
-//import jakarta.persistence.CascadeType;
+//import jakarta.persistence.CascadeType; 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,6 +42,7 @@ public class Stock {
         this.ticker = ticker;
         this.company = company;
         this.price = price;
+        this.count = count;
     }
 
     public void setStockPrice(double price) {

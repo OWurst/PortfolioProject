@@ -48,7 +48,6 @@ public class DTOTesting {
 
     private class UserDTOTests {
         static UserDTO inConstructor;
-        static UserDTO outConstructor;
 
         static int id;
 
@@ -57,8 +56,6 @@ public class DTOTesting {
         static String username;
         static String password;
         static String email;
-        static double totalCash;
-        static double totalWorth;
 
         private static void runTests(String inUser, String inPass, String inFirstName, String inLastName,
                 String inEmail, int inId) {

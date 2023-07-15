@@ -41,10 +41,10 @@ public class AssetServiceImpl implements AssetService {
 
         Stock stock = new Stock(ticker, "balls", Double.parseDouble(cost), Long.parseLong(count));
 
-        System.out.println("\n\nHi\n\n");
-        assets.addStock(stock);
+        //System.out.println("\n\nHi\n\n");
+        //assets.addStock(stock);
         stockSetRepository.save(stock); /// messy, seems wrong, but maybe this is needed for creation
-        System.out.println("\n\nHello\n\n");
+        //System.out.println("\n\nHello\n\n");
 
         return null;
     }

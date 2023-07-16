@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import OWurst.Investment_Simulator.Constants.AddressConstants;
-import OWurst.Investment_Simulator.Entity.Stock;
 import OWurst.Investment_Simulator.Service.AssetService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,8 +26,8 @@ public class AssetController {
     AssetService assetService;
 
     @GetMapping("/userStocks")
-    public ResponseEntity<List<Stock>> getAssets(HttpServletRequest request) {
-        return null;
+    public ResponseEntity<Object> getAssets(HttpServletRequest request) {
+        return assetService.getStocks(request);
     }
 
     @GetMapping("/userCash")

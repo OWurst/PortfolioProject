@@ -12,4 +12,6 @@ public interface AssetService {
 
     public ResponseEntity<String> sellStock(String ticker, String cost, String count,
             HttpServletRequest request);
+
+    public ResponseEntity<Object> getStocks(HttpServletRequest request);
 }

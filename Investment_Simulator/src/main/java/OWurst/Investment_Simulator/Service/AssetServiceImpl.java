@@ -1,8 +1,16 @@
 package OWurst.Investment_Simulator.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import OWurst.Investment_Simulator.Entity.Assets;
 import OWurst.Investment_Simulator.Entity.User;
@@ -29,6 +37,20 @@ public class AssetServiceImpl implements AssetService {
         Assets assets = assetRepository.findOneById(userId);
 
         return ResponseEntity.ok().body(assets.getCash());
+    }
+
+    public ResponseEntity<Object> getStocks(HttpServletRequest request) {
+        int userId = (int) request.getSession().getAttribute("USER_ID");
+        Map<String, Stock> stockset = assetRepository.findOneById(userId).getStockSet();
+        Object stockList = null;
+
+        try {
+            stockList = stocksetToList(stockset);
+        } catch (Exception e) {
+            System.out.println("\n\nstupid error\n\n");
+        }
+
+        return ResponseEntity.ok().body(stockList);
     }
 
     public ResponseEntity<String> buyStock(String ticker, String cost, String count,
@@ -79,6 +101,18 @@ public class AssetServiceImpl implements AssetService {
             assets.getStockSet().put(ticker, stock);
         }
         assetRepository.save(assets);
+    }
+
+    private Object stocksetToList(Map<String, Stock> stockset) throws JsonProcessingException {
+        Map<String, Object> json = new HashMap<String, Object>();
+        List<Object> stockList = new ArrayList<Object>();
+        ObjectMapper mapper = new ObjectMapper();
+        for (String key : stockset.keySet()) {
+            stockList.add(0, stockset.get(key));
+        }
+
+        json.put("stocks", mapper.writeValueAsString(stockList));
+        return json;
     }
 
     private Assets getAssetsFromSession(HttpServletRequest request) {

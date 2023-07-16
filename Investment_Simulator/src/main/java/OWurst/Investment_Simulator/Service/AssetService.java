@@ -9,4 +9,7 @@ public interface AssetService {
 
     public ResponseEntity<String> buyStock(String ticker, String cost, String count,
             HttpServletRequest request);
+
+    public ResponseEntity<String> sellStock(String ticker, String cost, String count,
+            HttpServletRequest request);
 }

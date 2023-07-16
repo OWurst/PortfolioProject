@@ -43,7 +43,8 @@ public class AssetController {
     }
 
     @PostMapping("/sellStock")
-    public ResponseEntity<String> sellStock(HttpServletRequest request) {
-        return null;
+    public ResponseEntity<String> sellStock(@RequestParam String ticker,
+            @RequestParam String cost, @RequestParam String count, HttpServletRequest request) {
+        return assetService.sellStock(ticker, cost, count, request);
     }
 }

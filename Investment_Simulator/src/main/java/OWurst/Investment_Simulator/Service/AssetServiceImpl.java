@@ -45,6 +45,19 @@ public class AssetServiceImpl implements AssetService {
         return ResponseEntity.ok().body("Purchase Successful");
     }
 
+    public ResponseEntity<String> sellStock(String ticker, String cost, String count,
+            HttpServletRequest request) {
+        Assets assets = getAssetsFromSession(request);
+        if (haveAssetsToSell(assets, ticker, Long.parseLong(count))) {
+            removeStockFromUser(assets, ticker, Long.parseLong(count));
+            incrementUserCash(assets, Double.parseDouble(cost) * Double.parseDouble(count));
+        } else {
+            String msg = "Sale can not be made: user does not have " + count + " shares of " + ticker;
+            return ResponseEntity.badRequest().body(msg);
+        }
+        return ResponseEntity.ok().body("Sale Successful");
+    }
+
     private void addStockToUser(Assets assets, String ticker, String cost, String count) {
         Stock stock = assets.getStock(ticker);
         if (stock == null) {
@@ -54,6 +67,17 @@ public class AssetServiceImpl implements AssetService {
             stock.setStockPrice(Double.parseDouble(count));
         }
         assets.addStock(ticker, stock);
+        assetRepository.save(assets);
+    }
+
+    private void removeStockFromUser(Assets assets, String ticker, long count) {
+        Stock stock = assets.getStock(ticker);
+        if (stock.getCount() == count) {
+            assets.getStockSet().remove(ticker);
+        } else {
+            stock.decrementStockCount(count);
+            assets.getStockSet().put(ticker, stock);
+        }
         assetRepository.save(assets);
     }
 
@@ -71,8 +95,24 @@ public class AssetServiceImpl implements AssetService {
             return true;
     }
 
+    private boolean haveAssetsToSell(Assets assets, String ticker, long count) {
+        Stock toSell = assets.getStockSet().get(ticker);
+        if (toSell == null)
+            return false;
+
+        if (toSell.getCount() >= count)
+            return true;
+        else
+            return false;
+    }
+
     private void decrementUserCash(Assets assets, double totalCost) {
         assets.decCash(totalCost);
+        assetRepository.save(assets);
+    }
+
+    private void incrementUserCash(Assets assets, double saleWorth) {
+        assets.incCash(saleWorth);
         assetRepository.save(assets);
     }
 }

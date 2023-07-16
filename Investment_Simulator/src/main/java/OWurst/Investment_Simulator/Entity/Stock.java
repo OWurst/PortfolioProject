@@ -26,6 +26,9 @@ public class Stock {
     @Column
     private long count;
 
+    public Stock() {
+    }
+
     public Stock(String ticker, String company) {
         this(ticker, company, -1.0, 0);
     }
@@ -51,6 +54,20 @@ public class Stock {
 
     public void setStockCount(long count) {
         this.count = count;
+    }
+
+    public boolean incrementStockCount(long toAdd) {
+        this.count += toAdd;
+        return true;
+    }
+
+    public boolean decrementStockCount(long toSubtract) {
+        if (this.count < toSubtract) {
+            return false;
+        }
+
+        this.count -= toSubtract;
+        return true;
     }
 
     public String getTicker() {

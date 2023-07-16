@@ -32,14 +32,14 @@ public class AssetController {
     }
 
     @GetMapping("/userCash")
-    public ResponseEntity<Double> getCash(@RequestParam String id, HttpServletRequest request) {
-        return assetService.getCash(id, request);
+    public ResponseEntity<Double> getCash(HttpServletRequest request) {
+        return assetService.getCash(request);
     }
 
     @PostMapping("/buyStock")
-    public ResponseEntity<String> buyStock(@RequestParam String id, @RequestParam String ticker,
+    public ResponseEntity<String> buyStock(@RequestParam String ticker,
             @RequestParam String cost, @RequestParam String count, HttpServletRequest request) {
-        return assetService.buyStock(id, ticker, cost, count, request);
+        return assetService.buyStock(ticker, cost, count, request);
     }
 
     @PostMapping("/sellStock")

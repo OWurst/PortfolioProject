@@ -1,10 +1,10 @@
 package OWurst.Investment_Simulator.Service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import OWurst.Investment_Simulator.Controller.StockController;
 import OWurst.Investment_Simulator.Entity.Assets;
 import OWurst.Investment_Simulator.Entity.User;
 import OWurst.Investment_Simulator.Entity.Stock;
@@ -25,27 +25,55 @@ public class AssetServiceImpl implements AssetService {
     @Autowired
     StockSetRepository stockSetRepository;
 
-    public ResponseEntity<Double> getCash(String id, HttpServletRequest request) {
-        int userId = Integer.parseInt(id);
+    public ResponseEntity<Double> getCash(HttpServletRequest request) {
+        int userId = (int) request.getSession().getAttribute("USER_ID");
         Assets assets = assetRepository.findOneById(userId);
 
         return ResponseEntity.ok().body(assets.getCash());
     }
 
-    public ResponseEntity<String> buyStock(String id, String ticker, String cost, String count,
+    public ResponseEntity<String> buyStock(String ticker, String cost, String count,
             HttpServletRequest request) {
-        int userId = Integer.parseInt(id);
+        Assets assets = getAssetsFromSession(request);
+        if (canAffordPurchase(assets, Double.parseDouble(cost) * Double.parseDouble(count))) {
+            addStockToUser(assets, ticker, cost, count);
+            decrementUserCash(assets, Double.parseDouble(cost) * Double.parseDouble(count));
+        } else {
+            String msg = "Purchase can not be made: user cannot afford " + count + " shares of " + ticker + " at "
+                    + cost + " per share";
+            return ResponseEntity.badRequest().body(msg);
+        }
+        return ResponseEntity.ok().body("Purchase Successful");
+    }
 
+    private void addStockToUser(Assets assets, String ticker, String cost, String count) {
+        Stock stock = assets.getStock(ticker);
+        if (stock == null) {
+            stock = new Stock(ticker, "balls", Double.parseDouble(cost), Long.parseLong(count));
+        } else {
+            stock.incrementStockCount(Long.parseLong(count));
+            stock.setStockPrice(Double.parseDouble(count));
+        }
+        assets.addStock(ticker, stock);
+        assetRepository.save(assets);
+    }
+
+    private Assets getAssetsFromSession(HttpServletRequest request) {
+        int userId = (int) request.getSession().getAttribute("USER_ID");
         User user = userRepository.findOneById(userId);
-        Assets assets = user.getAssets();
 
-        Stock stock = new Stock(ticker, "balls", Double.parseDouble(cost), Long.parseLong(count));
+        return user.getAssets();
+    }
 
-        //System.out.println("\n\nHi\n\n");
-        //assets.addStock(stock);
-        stockSetRepository.save(stock); /// messy, seems wrong, but maybe this is needed for creation
-        //System.out.println("\n\nHello\n\n");
+    private boolean canAffordPurchase(Assets assets, double totalCost) {
+        if (assets.getCash() < totalCost)
+            return false;
+        else
+            return true;
+    }
 
-        return null;
+    private void decrementUserCash(Assets assets, double totalCost) {
+        assets.decCash(totalCost);
+        assetRepository.save(assets);
     }
 }

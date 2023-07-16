@@ -1,29 +1,19 @@
 package OWurst.Investment_Simulator.Entity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
-
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.MapKey;
-import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
 
 @Entity
 @Table(name = "Assets")

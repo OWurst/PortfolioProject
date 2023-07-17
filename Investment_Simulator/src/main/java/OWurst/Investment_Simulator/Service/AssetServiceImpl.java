@@ -53,11 +53,11 @@ public class AssetServiceImpl implements AssetService {
         return ResponseEntity.ok().body(stockList);
     }
 
-    public ResponseEntity<String> buyStock(String ticker, String cost, String count,
+    public ResponseEntity<String> buyStock(String ticker, String company, String cost, String count,
             HttpServletRequest request) {
         Assets assets = getAssetsFromSession(request);
         if (canAffordPurchase(assets, Double.parseDouble(cost) * Double.parseDouble(count))) {
-            addStockToUser(assets, ticker, cost, count);
+            addStockToUser(assets, company, ticker, cost, count);
             decrementUserCash(assets, Double.parseDouble(cost) * Double.parseDouble(count));
         } else {
             String msg = "Purchase can not be made: user cannot afford " + count + " shares of " + ticker + " at "
@@ -80,10 +80,10 @@ public class AssetServiceImpl implements AssetService {
         return ResponseEntity.ok().body("Sale Successful");
     }
 
-    private void addStockToUser(Assets assets, String ticker, String cost, String count) {
+    private void addStockToUser(Assets assets, String company, String ticker, String cost, String count) {
         Stock stock = assets.getStock(ticker);
         if (stock == null) {
-            stock = new Stock(ticker, "balls", Double.parseDouble(cost), Long.parseLong(count));
+            stock = new Stock(ticker, company, Double.parseDouble(cost), Long.parseLong(count));
         } else {
             stock.incrementStockCount(Long.parseLong(count));
             stock.setStockPrice(Double.parseDouble(count));

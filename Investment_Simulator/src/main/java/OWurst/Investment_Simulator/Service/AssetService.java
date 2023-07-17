@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface AssetService {
     public ResponseEntity<Double> getCash(HttpServletRequest request);
 
-    public ResponseEntity<String> buyStock(String ticker, String cost, String count,
+    public ResponseEntity<String> buyStock(String company, String ticker, String cost, String count,
             HttpServletRequest request);
 
     public ResponseEntity<String> sellStock(String ticker, String cost, String count,

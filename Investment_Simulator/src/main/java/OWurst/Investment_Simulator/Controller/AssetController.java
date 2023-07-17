@@ -36,9 +36,9 @@ public class AssetController {
     }
 
     @PostMapping("/buyStock")
-    public ResponseEntity<String> buyStock(@RequestParam String ticker,
+    public ResponseEntity<String> buyStock(@RequestParam String ticker, @RequestParam String company,
             @RequestParam String cost, @RequestParam String count, HttpServletRequest request) {
-        return assetService.buyStock(ticker, cost, count, request);
+        return assetService.buyStock(ticker, company, cost, count, request);
     }
 
     @PostMapping("/sellStock")

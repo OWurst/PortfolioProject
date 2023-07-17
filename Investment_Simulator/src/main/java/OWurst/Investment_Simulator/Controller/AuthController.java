@@ -12,6 +12,7 @@ import OWurst.Investment_Simulator.Constants.AddressConstants;
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Service.AuthService;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController

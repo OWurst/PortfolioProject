@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import OWurst.Investment_Simulator.Repository.UserRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -17,8 +18,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        // If user id not in session or db,
-        // intercept request and return unauthorized error code
         if (request.getSession().getAttribute("USER_ID") == null) {
             response.getWriter().write("ERROR: User not authenticated");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -28,8 +27,6 @@ public class AuthInterceptor implements HandlerInterceptor {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
         }
-
-        // // User id is in session and db, continue to handle request
         return true;
     }
 }

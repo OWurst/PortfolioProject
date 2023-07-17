@@ -18,6 +18,7 @@ import OWurst.Investment_Simulator.Entity.Stock;
 import OWurst.Investment_Simulator.Repository.AssetRepository;
 import OWurst.Investment_Simulator.Repository.StockSetRepository;
 import OWurst.Investment_Simulator.Repository.UserRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service

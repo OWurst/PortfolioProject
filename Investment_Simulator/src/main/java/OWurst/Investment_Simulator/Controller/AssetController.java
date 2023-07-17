@@ -1,12 +1,9 @@
 package OWurst.Investment_Simulator.Controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin(origins = AddressConstants.FRONTEND_URL, allowCredentials = "true")
-@RequestMapping("/assets")
+@RequestMapping("/core/assets")
 public class AssetController {
     @Autowired
     AssetService assetService;

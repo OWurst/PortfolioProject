@@ -22,13 +22,10 @@ public class UserServiceImpl implements AuthService, AccountService {
 
     @Override
     public ResponseEntity<String> addUser(UserDTO userDTO, HttpServletRequest request) {
-        // Response body and status
         String body;
         HttpStatus status;
 
-        // Search to see if username is taken
         if (userRepository.findByUsername(userDTO.getUsername()) == null) {
-            // Create new user and add to repository
             if (userDTOFieldsAreAllLegal(userDTO)) {
                 User user = new User(userDTO.getFirstname(), userDTO.getLastname(),
                         userDTO.getUsername(),
@@ -36,11 +33,9 @@ public class UserServiceImpl implements AuthService, AccountService {
 
                 userRepository.save(user);
 
-                // Add username and id to sessions
                 request.getSession().setAttribute("USERNAME", user.getUsername());
                 request.getSession().setAttribute("USER_ID", user.getId());
 
-                // Update response to show success
                 body = "Registration successful";
                 status = HttpStatus.OK;
                 return new ResponseEntity<>(body, status);
@@ -49,12 +44,9 @@ public class UserServiceImpl implements AuthService, AccountService {
                 status = HttpStatus.BAD_REQUEST;
             }
         } else {
-            // Update response to show failure
             body = "Registration unsuccessful: username already taken";
             status = HttpStatus.BAD_REQUEST;
         }
-
-        // Return response
         return new ResponseEntity<>(body, status);
     }
 
@@ -88,39 +80,29 @@ public class UserServiceImpl implements AuthService, AccountService {
 
     @Override
     public ResponseEntity<String> loginUser(LoginDTO loginDTO, HttpServletRequest request) {
-        // Response body and status
         String body;
         HttpStatus status;
 
-        // Search for user in db
         User user = userRepository.findByUsername(loginDTO.getUsername());
 
-        // If user found, authenticate password
         if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            // Add username and id to sessions
             request.getSession().setAttribute("USERNAME", user.getUsername());
             request.getSession().setAttribute("USER_ID", user.getId());
 
-            // Update response to show success
             body = "Login successful";
             status = HttpStatus.OK;
         } else {
-            // Update response to show failure
             body = "Login unsuccessful: Invalid username or password";
             status = HttpStatus.BAD_REQUEST;
         }
-
-        // Return response
         return new ResponseEntity<>(body, status);
     }
 
     @Override
     public ResponseEntity<String> logoutUser(HttpServletRequest request) {
-        // Response body and status
         String body;
         HttpStatus status;
 
-        // Invalidate user session
         try {
             request.getSession().invalidate();
             body = "Logout successful";
@@ -129,14 +111,10 @@ public class UserServiceImpl implements AuthService, AccountService {
             body = "Logout unsuccessful: " + e.getMessage();
             status = HttpStatus.BAD_REQUEST;
         }
-
-        // Return response
         return new ResponseEntity<>(body, status);
     }
 
     private boolean userDTOFieldsAreAllLegal(UserDTO userDTO) {
-        System.out.println("firstname = " + userDTO.getFirstname());
-        System.out.println("lastname = " + userDTO.getLastname());
         if (userDTO.getUsername() == null || userDTO.getUsername().equals("")) {
             System.out.println("\n\nHmmm\n\n");
             return false;
@@ -157,7 +135,6 @@ public class UserServiceImpl implements AuthService, AccountService {
             System.out.println("\n\nc\n\n");
             return false;
         }
-
         return true;
     }
 }

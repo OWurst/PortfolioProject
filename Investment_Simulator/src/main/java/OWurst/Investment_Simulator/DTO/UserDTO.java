@@ -11,7 +11,6 @@ public class UserDTO {
     private String email;
 
     public UserDTO() {
-        // Empty constructor
     }
 
     public UserDTO(String username, String password, String firstname, String lastname, String email) {

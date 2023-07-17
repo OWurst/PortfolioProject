@@ -1,9 +1,8 @@
 package OWurst.Investment_Simulator.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseEntity;
 
-//import OWurst.Investment_Simulator.DTO.UserDTO; //will be used for update user down the road
+import org.springframework.http.ResponseEntity;
 
 public interface AccountService {
     public ResponseEntity<String> getUsername(HttpServletRequest request);

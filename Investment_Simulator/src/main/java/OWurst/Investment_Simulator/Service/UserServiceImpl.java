@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Entity.User;
@@ -112,6 +113,38 @@ public class UserServiceImpl implements AuthService, AccountService {
             status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(body, status);
+    }
+
+    @Override
+    public ResponseEntity<String> changePassword(ChangePWDTO changePWDTO, HttpServletRequest request) {
+        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+        if (passwordEncoder.matches(changePWDTO.getOldpassword(), user.getPassword())) {
+            user.setPassword(this.passwordEncoder.encode(changePWDTO.getNewpassword()));
+            userRepository.save(user);
+            return ResponseEntity.ok().body("Success saving new password");
+        }
+        return ResponseEntity.badRequest().body("Failed: incorrect password");
+    }
+
+    @Override
+    public ResponseEntity<String> getUserObject(HttpServletRequest request) {
+        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+
+        String msg = "{\"username\": \"" + user.getUsername() + "\", \"firstname\": \"" + user.getFirstName() + "\","
+                + "\"lastname\": \"" + user.getLastName() + "\"," +
+                "\"email\": \"" + user.getEmail() + "\"}";
+
+        return ResponseEntity.ok().body(msg);
+
+    }
+
+    @Override
+    public ResponseEntity<String> changeEmail(String email, HttpServletRequest request) {
+        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+
+        user.setEmail(email);
+        userRepository.save(user);
+        return ResponseEntity.ok().body("Success saving new password");
     }
 
     private boolean userDTOFieldsAreAllLegal(UserDTO userDTO) {

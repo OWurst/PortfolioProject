@@ -53,10 +53,6 @@ public class User {
         this(firstname, lastname, username, password, null);
     }
 
-    public double getCash() {
-        return this.assets.getCash();
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -71,6 +67,10 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPassword() {

@@ -1,5 +1,6 @@
 package OWurst.Investment_Simulator.Service;
 
+import org.apache.commons.validator.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -148,26 +149,81 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     private boolean userDTOFieldsAreAllLegal(UserDTO userDTO) {
-        if (userDTO.getUsername() == null || userDTO.getUsername().equals("")) {
-            System.out.println("\n\nHmmm\n\n");
+        if (validUsername(userDTO.getUsername()) &&
+                validPassword(userDTO.getPassword()) &&
+                validName(userDTO.getFirstname()) &&
+                validName(userDTO.getFirstname()) &&
+                validEmail(userDTO.getEmail())) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validEmail(String email) {
+        return org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email);
+    }
+
+    private boolean validUsername(String username) {
+        return username.length() >= 4;
+    }
+
+    private boolean validName(String name) {
+        return name.length() >= 2;
+    }
+
+    private boolean validPassword(String pw) {
+        if (pw.length() < 8) {
             return false;
         }
-        if (userDTO.getPassword() == null || userDTO.getPassword().equals("")) {
-            System.out.println("\n\na\n\n");
+        if (!containsLowerCase(pw)) {
             return false;
         }
-        if (userDTO.getFirstname() == null || userDTO.getFirstname().equals("")) {
-            System.out.println("\n\nb\n\n");
+        if (!containsUpperCase(pw)) {
             return false;
         }
-        if (userDTO.getLastname() == null || userDTO.getLastname().equals("")) {
-            System.out.println("\n\nb\n\n");
+        if (!containsSpecialCharacter(pw)) {
             return false;
         }
-        if (userDTO.getEmail() == null || userDTO.getEmail().equals("")) {
-            System.out.println("\n\nc\n\n");
+        if (!containsNumber(pw)) {
             return false;
         }
         return true;
+    }
+
+    private boolean containsSpecialCharacter(String pw) {
+        String[] specChars = { "!", "@", "#", "$", "%", "^", "&", "*", "?" };
+        for (int i = 0; i < specChars.length; i++) {
+            if (pw.contains(specChars[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean containsUpperCase(String pw) {
+        for (int i = 0; i < pw.length(); i++) {
+            if (pw.charAt(i) >= 65 && pw.charAt(i) <= 90) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean containsLowerCase(String pw) {
+        for (int i = 0; i < pw.length(); i++) {
+            if (pw.charAt(i) >= 97 && pw.charAt(i) <= 122) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean containsNumber(String pw) {
+        for (int i = 0; i < pw.length(); i++) {
+            if (pw.charAt(i) >= 48 && pw.charAt(i) <= 57) {
+                return true;
+            }
+        }
+        return false;
     }
 }

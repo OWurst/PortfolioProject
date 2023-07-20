@@ -1,6 +1,5 @@
 package OWurst.Investment_Simulator.Service;
 
-import org.apache.commons.validator.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -119,6 +118,9 @@ public class UserServiceImpl implements AuthService, AccountService {
     @Override
     public ResponseEntity<String> changePassword(ChangePWDTO changePWDTO, HttpServletRequest request) {
         User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+        if (!validPassword(changePWDTO.getNewpassword())) {
+            return ResponseEntity.badRequest().body("Failed: invalid password");
+        }
         if (passwordEncoder.matches(changePWDTO.getOldpassword(), user.getPassword())) {
             user.setPassword(this.passwordEncoder.encode(changePWDTO.getNewpassword()));
             userRepository.save(user);
@@ -142,7 +144,9 @@ public class UserServiceImpl implements AuthService, AccountService {
     @Override
     public ResponseEntity<String> changeEmail(String email, HttpServletRequest request) {
         User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
-
+        if (!validEmail(email)) {
+            return ResponseEntity.badRequest().body("Failed: invalid email");
+        }
         user.setEmail(email);
         userRepository.save(user);
         return ResponseEntity.ok().body("Success saving new password");

@@ -38,7 +38,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(2)
     public void testSaveUserReturnsOKOnNormalInput() {
-        UserDTO testDTO = new UserDTO("user", "pass", "firstname", "lastname", "email@");
+        UserDTO testDTO = new UserDTO("user", "Password1$", "firstname", "lastname", "email@gmail.com");
         ResponseEntity<String> response = authController.saveUser(testDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -46,7 +46,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(3)
     public void testSaveUserFailsOnSameUsername() {
-        UserDTO testDTO = new UserDTO("user", "pass", "firstname", "lastname", "email@");
+        UserDTO testDTO = new UserDTO("user", "Password1$", "firstname", "lastname", "email@gmail.com");
         ResponseEntity<String> response = authController.saveUser(testDTO, request);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -65,7 +65,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(5)
     void testSaveUserFailsOnNoEmailOrNoName() {
-        UserDTO userDTO = new UserDTO("userooni", "billiam", "ridderson", "", "x@x");
+        UserDTO userDTO = new UserDTO("userooni", "billiam$Y", "ridderson", "", "x@x");
         ResponseEntity<String> response = authController.saveUser(userDTO, request);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         userDTO = new UserDTO("userooni", "billiam", "oweno", "fletch", "");
@@ -76,7 +76,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(6)
     void testLoginFailsWithBadUsername() {
-        LoginDTO badLoginDTO = new LoginDTO("", "pass");
+        LoginDTO badLoginDTO = new LoginDTO("", "Password1$");
         ResponseEntity<String> response = authController.loginUser(badLoginDTO, request);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -92,7 +92,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(8)
     void testLoginSucceedsWithLegalInfo() {
-        LoginDTO loginDTO = new LoginDTO("user", "pass");
+        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
         ResponseEntity<String> response = authController.loginUser(loginDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -107,7 +107,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(11)
     void testDeleteUser() {
-        LoginDTO loginDTO = new LoginDTO("user", "pass");
+        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
         authController.loginUser(loginDTO, request);
 
         ResponseEntity<String> response = accountController.deleteUser(request);

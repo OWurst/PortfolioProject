@@ -168,11 +168,11 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     private boolean validUsername(String username) {
-        return username.length() >= 4;
+        return (username.length() >= 4) && (username.length() < 20);
     }
 
     private boolean validName(String name) {
-        return name.length() >= 2;
+        return (name.length() >= 2) && (name.length() >= 15);
     }
 
     private boolean validPassword(String pw) {
@@ -205,9 +205,11 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     private boolean containsUpperCase(String pw) {
-        for (int i = 0; i < pw.length(); i++) {
-            if (pw.charAt(i) >= 65 && pw.charAt(i) <= 90) {
-                return true;
+        if (pw.length() > 7 && pw.length() < 20) {
+            for (int i = 0; i < pw.length(); i++) {
+                if (pw.charAt(i) >= 65 && pw.charAt(i) <= 90) {
+                    return true;
+                }
             }
         }
         return false;

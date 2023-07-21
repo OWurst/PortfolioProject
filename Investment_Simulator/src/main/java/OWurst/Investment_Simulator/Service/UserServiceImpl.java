@@ -176,7 +176,7 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     private boolean validPassword(String pw) {
-        if (pw.length() < 8) {
+        if (pw.length() < 8 || pw.length() >= 20) {
             return false;
         }
         if (!containsLowerCase(pw)) {
@@ -205,11 +205,9 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     private boolean containsUpperCase(String pw) {
-        if (pw.length() > 7 && pw.length() < 20) {
-            for (int i = 0; i < pw.length(); i++) {
-                if (pw.charAt(i) >= 65 && pw.charAt(i) <= 90) {
-                    return true;
-                }
+        for (int i = 0; i < pw.length(); i++) {
+            if (pw.charAt(i) >= 65 && pw.charAt(i) <= 90) {
+                return true;
             }
         }
         return false;

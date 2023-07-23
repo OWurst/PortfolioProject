@@ -156,7 +156,7 @@ public class UserServiceImpl implements AuthService, AccountService {
         if (validUsername(userDTO.getUsername()) &&
                 validPassword(userDTO.getPassword()) &&
                 validName(userDTO.getFirstname()) &&
-                validName(userDTO.getFirstname()) &&
+                validName(userDTO.getLastname()) &&
                 validEmail(userDTO.getEmail())) {
             return true;
         }
@@ -172,7 +172,7 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     private boolean validName(String name) {
-        return (name.length() >= 2) && (name.length() >= 15);
+        return (name.length() >= 2) && (name.length() <= 15);
     }
 
     private boolean validPassword(String pw) {

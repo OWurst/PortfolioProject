@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import OWurst.Investment_Simulator.Controller.AccountController;
 import OWurst.Investment_Simulator.Controller.AuthController;
+import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 
@@ -92,20 +93,35 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(8)
     void testLoginSucceedsWithLegalInfo() {
-        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
+        LoginDTO loginDTO = new LoginDTO("user", "Password2$");
         ResponseEntity<String> response = authController.loginUser(loginDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    @Order(10)
+    @Order(9)
+    void testChangePWSucceedsWithLegalInfo() {
+        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
+        authController.loginUser(loginDTO, request);
+        ChangePWDTO change = new ChangePWDTO("Password1$", "Password2$");
+        ResponseEntity<String> response = accountController.updatePassword(change, request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        loginDTO = new LoginDTO("user", "Password2$");
+        response = authController.loginUser(loginDTO, request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    @Order(14)
     void testLogoutSucceeds() {
+        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
+        authController.loginUser(loginDTO, request);
         ResponseEntity<String> response = authController.logoutUser(request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    @Order(11)
+    @Order(15)
     void testDeleteUser() {
         LoginDTO loginDTO = new LoginDTO("user", "Password1$");
         authController.loginUser(loginDTO, request);

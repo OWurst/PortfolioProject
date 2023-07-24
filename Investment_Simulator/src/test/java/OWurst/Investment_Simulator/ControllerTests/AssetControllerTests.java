@@ -39,7 +39,7 @@ public class AssetControllerTests {
 
     @Test
     void getCashAfterContstruction() {
-        assertEquals(100000.0, assets.getCash());
+        assertEquals(100000.0, assets.getCash());// fail
         assets = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID")).getAssets();
     }
 

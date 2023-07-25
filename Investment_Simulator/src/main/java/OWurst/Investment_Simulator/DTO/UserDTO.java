@@ -38,11 +38,11 @@ public class UserDTO {
     }
 
     public void setFirstname(String firstname) {
-        this.lastname = firstname;
+        this.firstname = firstname;
     }
 
     public void setLastname(String lastname) {
-        this.firstname = lastname;
+        this.lastname = lastname;
     }
 
     public String getUsername() {

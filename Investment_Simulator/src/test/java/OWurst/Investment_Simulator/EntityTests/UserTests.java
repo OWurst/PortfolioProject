@@ -50,4 +50,13 @@ public class UserTests {
         User user2 = new User("", "", "", "", "howdy@hello");
         assertEquals(user2.getEmail(), "howdy@hello");
     }
+
+    @Test
+    void testFirstNameLastName() {
+        // constructor without email
+        User user1 = new User("", "", "", "");
+        assertEquals(null, user1.getEmail());
+        user1.setEmail("email");
+        assertEquals(user1.getEmail(), "email");
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import OWurst.Investment_Simulator.Controller.AssetController;
 import OWurst.Investment_Simulator.Controller.AuthController;
+import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Entity.Assets;
 import OWurst.Investment_Simulator.Repository.UserRepository;
@@ -28,24 +29,29 @@ public class AssetControllerTests {
     @Autowired
     UserRepository userRepository;
 
-    Assets assets;
+    static Assets assets;
 
     static MockHttpServletRequest request = new MockHttpServletRequest();
 
-    @BeforeTestClass
-    void createTestUser() {
-        testSaveUserReturnsOKOnNormalInput();
-    }
-
     @Test
-    void getCashAfterContstruction() {
-        assertEquals(100000.0, assets.getCash());// fail
-        assets = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID")).getAssets();
-    }
-
+    @Order(1)
     public void testSaveUserReturnsOKOnNormalInput() {
         UserDTO testDTO = new UserDTO("user", "Password1$", "firstname", "lastname", "email@gmail.com");
         ResponseEntity<String> response = authController.saveUser(testDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    @Order(2)
+    void getNewUserCash() {
+        loginUser();
+        ResponseEntity<Double> response = assetController.getCash(request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(100000.00, response.getBody());
+    }
+
+    void loginUser() {
+        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
+        authController.loginUser(loginDTO, request);
     }
 }

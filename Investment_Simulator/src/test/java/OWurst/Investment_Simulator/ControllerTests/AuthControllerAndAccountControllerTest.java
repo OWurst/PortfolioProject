@@ -101,12 +101,12 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(9)
     void testChangePWSucceedsWithLegalInfo() {
-        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
-        authController.loginUser(loginDTO, request);
+        loginUser();
+
         ChangePWDTO change = new ChangePWDTO("Password1$", "Password2$");
         ResponseEntity<String> response = accountController.updatePassword(change, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        loginDTO = new LoginDTO("user", "Password2$");
+        LoginDTO loginDTO = new LoginDTO("user", "Password2$");
         response = authController.loginUser(loginDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -114,8 +114,8 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(14)
     void testLogoutSucceeds() {
-        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
-        authController.loginUser(loginDTO, request);
+        loginUser();
+
         ResponseEntity<String> response = authController.logoutUser(request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -123,10 +123,14 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(15)
     void testDeleteUser() {
-        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
-        authController.loginUser(loginDTO, request);
+        loginUser();
 
         ResponseEntity<String> response = accountController.deleteUser(request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    void loginUser() {
+        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
+        authController.loginUser(loginDTO, request);
     }
 }

@@ -163,7 +163,11 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     private boolean validEmail(String email) {
-        return org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email);
+        try {
+            return org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private boolean validUsername(String username) {

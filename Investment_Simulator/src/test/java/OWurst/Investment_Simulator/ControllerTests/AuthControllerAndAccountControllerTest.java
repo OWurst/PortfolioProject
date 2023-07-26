@@ -9,11 +9,12 @@ import OWurst.Investment_Simulator.Controller.AuthController;
 import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
-import net.minidev.json.JSONObject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -94,7 +95,7 @@ public class AuthControllerAndAccountControllerTest {
     @Test
     @Order(8)
     void testLoginSucceedsWithLegalInfo() {
-        LoginDTO loginDTO = new LoginDTO("user", "Password2$");
+        LoginDTO loginDTO = new LoginDTO("user", "Password1$");
         ResponseEntity<String> response = authController.loginUser(loginDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -110,6 +111,41 @@ public class AuthControllerAndAccountControllerTest {
         LoginDTO loginDTO = new LoginDTO("user", "Password2$");
         response = authController.loginUser(loginDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        change = new ChangePWDTO("Password2$", "Password1$");
+        response = accountController.updatePassword(change, request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    void testChangePWFailsWithIllegalInfo() {
+        loginUser();
+
+        ChangePWDTO change;
+        ResponseEntity<String> response;
+
+        change = new ChangePWDTO("Password2$", "Password2$");
+        response = accountController.updatePassword(change, request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        change = new ChangePWDTO("Password1$", "Password2");
+        response = accountController.updatePassword(change, request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        change = new ChangePWDTO("Password$", "Password2$");
+        response = accountController.updatePassword(change, request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        change = new ChangePWDTO("Password1$", "password2$");
+        response = accountController.updatePassword(change, request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        change = new ChangePWDTO("Password1$", "PASSWORD2$");
+        response = accountController.updatePassword(change, request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        change = new ChangePWDTO("Password1$", "Pd2$");
+        response = accountController.updatePassword(change, request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
@@ -119,7 +155,13 @@ public class AuthControllerAndAccountControllerTest {
         ResponseEntity<String> response = accountController.updateEmail("bobby@gmail.com", request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        // UserDTO user = accountController.getUserObject(request).getBody();
+        ObjectMapper mapper = new ObjectMapper();
+        UserDTO user = null;
+        try {
+            user = mapper.readValue(accountController.getUserObject(request).getBody(), UserDTO.class);
+        } catch (Exception e) {
+        }
+        assertEquals("bobby@gmail.com", user.getEmail());
     }
 
     @Test

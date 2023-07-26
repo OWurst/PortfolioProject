@@ -9,6 +9,7 @@ import OWurst.Investment_Simulator.Controller.AuthController;
 import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
+import net.minidev.json.JSONObject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -109,6 +110,16 @@ public class AuthControllerAndAccountControllerTest {
         LoginDTO loginDTO = new LoginDTO("user", "Password2$");
         response = authController.loginUser(loginDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    @Order(11)
+    void testChangeEmailWorksWithLegalEmail() {
+        loginUser();
+        ResponseEntity<String> response = accountController.updateEmail("bobby@gmail.com", request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        // UserDTO user = accountController.getUserObject(request).getBody();
     }
 
     @Test

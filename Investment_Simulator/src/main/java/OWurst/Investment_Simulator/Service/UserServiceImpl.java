@@ -138,7 +138,6 @@ public class UserServiceImpl implements AuthService, AccountService {
                 "\"email\": \"" + user.getEmail() + "\"}";
 
         return ResponseEntity.ok().body(msg);
-
     }
 
     @Override

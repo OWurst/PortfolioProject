@@ -1,27 +1,36 @@
 package OWurst.Investment_Simulator.Controller;
 
 import java.net.http.HttpRequest;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import OWurst.Investment_Simulator.Constants.AddressConstants;
-import OWurst.Investment_Simulator.DTO.StockListDTO;
+import OWurst.Investment_Simulator.Entity.Stock;
+import OWurst.Investment_Simulator.Service.StockService;
 
 @RestController
 @CrossOrigin(origins = AddressConstants.FRONTEND_URL, allowCredentials = "true")
 @RequestMapping("/core/api")
 public class StockController {
-    @GetMapping("/updateStockValues")
-    public String updateMyStocks(StockListDTO stockListDTO, HttpRequest request) {
-        return "update stocks";
+
+    @Autowired
+    StockService stockService;
+
+    @PutMapping("/updateStockValues")
+    public ResponseEntity<String> updateMyStocks(HttpRequest request) {
+        return null;
     }
 
     @GetMapping("/searchForStocks")
-    public String findStock(@RequestParam String toSearch, HttpRequest request) {
-        return "get stock";
+    public ResponseEntity<List<Stock>> findStock(@RequestParam String toSearch, HttpRequest request) {
+        return null;
     }
 }

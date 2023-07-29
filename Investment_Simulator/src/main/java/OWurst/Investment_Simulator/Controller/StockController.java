@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +27,16 @@ public class StockController {
 
     @PutMapping("/updateStockValues")
     public ResponseEntity<String> updateMyStocks(HttpRequest request) {
-        return null;
+        return stockService.updateStocks(request);
     }
 
     @GetMapping("/searchForStocks")
     public ResponseEntity<List<Stock>> findStock(@RequestParam String toSearch, HttpRequest request) {
-        return null;
+        return stockService.findStock(toSearch, request);
+    }
+
+    @PostMapping("createStockTable")
+    public ResponseEntity<String> createTable(HttpRequest request) {
+        return stockService.createTable(request);
     }
 }

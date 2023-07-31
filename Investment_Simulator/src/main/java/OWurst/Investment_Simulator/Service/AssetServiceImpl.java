@@ -16,7 +16,7 @@ import OWurst.Investment_Simulator.Entity.Assets;
 import OWurst.Investment_Simulator.Entity.User;
 import OWurst.Investment_Simulator.Entity.Stock;
 import OWurst.Investment_Simulator.Repository.AssetRepository;
-import OWurst.Investment_Simulator.Repository.StockSetRepository;
+//import OWurst.Investment_Simulator.Repository.StockSetRepository;
 import OWurst.Investment_Simulator.Repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +31,7 @@ public class AssetServiceImpl implements AssetService {
     private UserRepository userRepository;
 
     @Autowired
-    StockSetRepository stockSetRepository;
+    // private StockSetRepository stockSetRepository;
 
     public ResponseEntity<Double> getCash(HttpServletRequest request) {
         int userId = (int) request.getSession().getAttribute("USER_ID");

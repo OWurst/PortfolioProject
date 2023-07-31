@@ -1,22 +1,39 @@
 package OWurst.Investment_Simulator.Service;
 
-import java.net.http.HttpRequest;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import OWurst.Investment_Simulator.Entity.Stock;
+import OWurst.Investment_Simulator.Repository.APIStockRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+
+@Service
 public class StockServiceImpl implements StockService {
-    public ResponseEntity<String> updateStocks(HttpRequest request) {
+    @Autowired
+    APIStockRepository stockRepository;
+
+    public ResponseEntity<String> updateStocks(HttpServletRequest request) {
         return null;
     }
 
-    public ResponseEntity<List<Stock>> findStock(String toSearch, HttpRequest request) {
+    public ResponseEntity<List<Stock>> findStock(String toSearch, HttpServletRequest request) {
         return null;
     }
 
-    public ResponseEntity<String> createTable(HttpRequest request) {
+    public ResponseEntity<String> createTable(HttpServletRequest request) {
+        try {
+            getUserId(request);
+        } catch (Exception e) {
+
+        }
         return null;
+    }
+
+    private int getUserId(HttpServletRequest request) throws Exception {
+        return (int) request.getSession().getAttribute("USER_ID");
     }
 }

@@ -30,7 +30,7 @@ public class AssetServiceImpl implements AssetService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
+    // @Autowired
     // private StockSetRepository stockSetRepository;
 
     public ResponseEntity<Double> getCash(HttpServletRequest request) {

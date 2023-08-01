@@ -28,7 +28,8 @@ public class StockServiceImpl implements StockService {
         try {
             getUserId(request);
         } catch (Exception e) {
-
+            String msg = "Error: User Not Verified";
+            return ResponseEntity.badRequest().body(msg);
         }
         return null;
     }

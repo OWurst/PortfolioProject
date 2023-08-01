@@ -1,7 +1,5 @@
 package OWurst.Investment_Simulator.Controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import OWurst.Investment_Simulator.Constants.AddressConstants;
-import OWurst.Investment_Simulator.Entity.Stock;
 import OWurst.Investment_Simulator.Service.StockService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +29,7 @@ public class StockController {
     }
 
     @GetMapping("/searchForStocks")
-    public ResponseEntity<List<Stock>> findStock(@RequestParam String toSearch, HttpServletRequest request) {
+    public ResponseEntity<String> findStock(@RequestParam String toSearch, HttpServletRequest request) {
         return stockService.findStock(toSearch, request);
     }
 

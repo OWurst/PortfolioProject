@@ -15,7 +15,7 @@ public class StockServiceImpl implements StockService {
 
     public ResponseEntity<String> updateStocks(HttpServletRequest request) {
         try {
-            getUserId(request);
+            int id = getUserId(request);
         } catch (Exception e) {
             return unverifiedRequester();
         }
@@ -24,7 +24,7 @@ public class StockServiceImpl implements StockService {
 
     public ResponseEntity<String> findStock(String toSearch, HttpServletRequest request) { // list?? this is for search
         try {
-            getUserId(request);
+            int id = getUserId(request);
         } catch (Exception e) {
             return unverifiedRequester();
         }
@@ -33,7 +33,7 @@ public class StockServiceImpl implements StockService {
 
     public ResponseEntity<String> createTable(HttpServletRequest request) {
         try {
-            getUserId(request);
+            int id = getUserId(request);
         } catch (Exception e) {
             return unverifiedRequester();
         }

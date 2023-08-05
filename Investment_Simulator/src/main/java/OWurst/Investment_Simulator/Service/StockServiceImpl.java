@@ -36,6 +36,7 @@ public class StockServiceImpl implements StockService {
         return null;
     }
 
+    // do this first
     // look into a stream for this, is it possible to get stocks and their values
     // via an interface and work on adding them to the database faster than a simple
     // do all in wrapper interface, then all in this??

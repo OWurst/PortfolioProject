@@ -28,9 +28,14 @@ public class StockController {
         return stockService.updateStocks(request);
     }
 
-    @GetMapping("/searchForStocks")
-    public ResponseEntity<String> findStock(@RequestParam String toSearch, HttpServletRequest request) {
-        return stockService.findStock(toSearch, request);
+    @GetMapping("/searchStock")
+    public ResponseEntity<String> stockSearch(@RequestParam String toSearch, HttpServletRequest request) {
+        return stockService.getStock(toSearch, request);
+    }
+
+    @GetMapping("/getStock")
+    public ResponseEntity<String> getStock(@RequestParam String toSearch, HttpServletRequest request) {
+        return stockService.getStock(toSearch, request);
     }
 
     @PostMapping("createStockTable")

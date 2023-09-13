@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import OWurst.Investment_Simulator.Entity.Assets;
+//import OWurst.Investment_Simulator.Entity.Assets;
 import OWurst.Investment_Simulator.Repository.APIStockRepository;
 import OWurst.Investment_Simulator.Repository.AssetRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,15 +19,24 @@ public class StockServiceImpl implements StockService {
 
     public ResponseEntity<String> updateStocks(HttpServletRequest request) {
         try {
-            int id = getUserId(request);
-            Assets assets = assetRepository.findOneById(id);
+            // int id = getUserId(request);
+            // Assets assets = assetRepository.findOneById(id);
         } catch (Exception e) {
             return unverifiedRequester();
         }
         return null;
     }
 
-    public ResponseEntity<String> findStock(String toSearch, HttpServletRequest request) { // list?? this is for search
+    public ResponseEntity<String> searchStock(String toSearch, HttpServletRequest request) { // list?? for search
+        try {
+            getUserId(request);
+        } catch (Exception e) {
+            return unverifiedRequester();
+        }
+        return null;
+    }
+
+    public ResponseEntity<String> getStock(String toSearch, HttpServletRequest request) { // list?? for search
         try {
             getUserId(request);
         } catch (Exception e) {

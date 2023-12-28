@@ -1,10 +1,10 @@
 spring.application.name = InvestmentSim
 
-##Default Spring port
+## Default Spring port
 server.port = 8080
 
-spring.jpa.hibernate.ddl-auto=create
-#spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=create ## create new database instance for each run
+# spring.jpa.hibernate.ddl-auto=update ## update existing database for each run
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 #########################################
@@ -16,8 +16,7 @@ spring.datasource.username=root
 spring.datasource.password=
 #########################################
 
-
-#jpa vendor adapter configuration
+# jpa vendor adapter configuration
 spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 spring.jpa.generate-ddl=true
 spring.jpa.show-sql=true

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.DTO.LoginDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;

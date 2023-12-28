@@ -8,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 //import OWurst.Investment_Simulator.Entity.Assets;
 
 @SpringBootTest
-public class AssetTests {
+class AssetTests {
 
     @Test
-    void testName() {
+    void name() {
 
     }
 

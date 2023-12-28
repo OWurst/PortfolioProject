@@ -8,9 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import OWurst.Investment_Simulator.Entity.User;
 
 @SpringBootTest
-public class UserTests {
+class UserTests {
     @Test
-    void testConstructorA() {
+    void constructorA() {
         User user = new User("owen", "wurst", "uname", "pw");
         assertEquals(user.getPassword(), "pw");
         assertEquals(user.getUsername(), "uname");
@@ -19,7 +19,7 @@ public class UserTests {
     }
 
     @Test
-    void testConstructorB() {
+    void constructorB() {
         User user = new User("owen", "wurst", "uname", "pw", null);
         assertEquals(user.getPassword(), "pw");
         assertEquals(user.getUsername(), "uname");
@@ -28,7 +28,7 @@ public class UserTests {
     }
 
     @Test
-    void testConstructorsReturnStartingCash() {
+    void constructorsReturnStartingCash() {
         User user1 = new User("", "", "", "");
 
         assertEquals(user1.getAssets().getCash(), User.STARTING_CASH);
@@ -39,7 +39,7 @@ public class UserTests {
     }
 
     @Test
-    void testSetAndGetEmail() {
+    void setAndGetEmail() {
         // constructor without email
         User user1 = new User("", "", "", "");
         assertEquals(null, user1.getEmail());
@@ -52,7 +52,7 @@ public class UserTests {
     }
 
     @Test
-    void testFirstNameLastName() {
+    void firstNameLastName() {
         // constructor without email
         User user1 = new User("", "", "", "");
         assertEquals(null, user1.getEmail());

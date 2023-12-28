@@ -18,7 +18,7 @@ import OWurst.Investment_Simulator.Entity.Assets;
 import OWurst.Investment_Simulator.Repository.UserRepository;
 
 @SpringBootTest
-public class AssetControllerTests {
+class AssetControllerTests {
     @Autowired
     AssetController assetController;
 
@@ -34,7 +34,7 @@ public class AssetControllerTests {
 
     @Test
     @Order(1)
-    public void testSaveUserReturnsOKOnNormalInput() {
+    void saveUserReturnsOKOnNormalInput() {
         UserDTO testDTO = new UserDTO("user", "Password1$", "firstname", "lastname", "email@gmail.com");
         ResponseEntity<String> response = authController.saveUser(testDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());

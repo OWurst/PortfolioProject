@@ -8,27 +8,27 @@ import org.springframework.boot.test.context.SpringBootTest;
 import OWurst.Investment_Simulator.Entity.Stock;
 
 @SpringBootTest
-public class StockTests {
+class StockTests {
     @Test
-    void testStockConstructorTest() {
+    void stockConstructorTest() {
         Stock test = new Stock("mtb", "m&t bank", 100.0, 12);
         assertEquals(Stock.class, test.getClass());
     }
 
     @Test
-    void testGetTicker() {
+    void getTicker() {
         Stock test = createSimpleStock();
         assertEquals("tick", test.getTicker());
     }
 
     @Test
-    void testGetCompany() {
+    void getCompany() {
         Stock test = createSimpleStock();
         assertEquals("company", test.getCompany());
     }
 
     @Test
-    void testSetAndGetPrice() {
+    void setAndGetPrice() {
         Stock test = createSimpleStock();
         assertEquals(10.0, test.getPrice());
         test.setStockPrice(5.0);
@@ -36,7 +36,7 @@ public class StockTests {
     }
 
     @Test
-    void testSetAndGetCount() {
+    void setAndGetCount() {
         Stock test = createSimpleStock();
         assertEquals(5, test.getCount());
         test.setStockCount(10);
@@ -44,7 +44,7 @@ public class StockTests {
     }
 
     @Test
-    void testIncrementStockCount() {
+    void incrementStockCount() {
         Stock test = createSimpleStock();
         assertEquals(5, test.getCount());
         test.incrementStockCount(5);
@@ -52,7 +52,7 @@ public class StockTests {
     }
 
     @Test
-    void testDecrementStockCount() {
+    void decrementStockCount() {
         Stock test = createSimpleStock();
         assertEquals(5, test.getCount());
         test.decrementStockCount(5);

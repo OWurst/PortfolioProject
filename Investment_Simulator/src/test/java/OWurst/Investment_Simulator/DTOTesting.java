@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 //  I ever change one of the classes they are used for and add/remove variables 06/23/2023
 
 @SpringBootTest
-public class DTOTesting {
+class DTOTesting {
     @Test
     void runTestsForAllDTOs() {
         LoginDTOTests.runTests("user", "pass");

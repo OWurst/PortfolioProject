@@ -1,3 +1,5 @@
+## Name this file "application.properties"
+
 spring.application.name = InvestmentSim
 
 ## Default Spring port

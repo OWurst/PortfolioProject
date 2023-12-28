@@ -1,1 +1,4 @@
 .vscode/*
+Investment_Simulator/target/*
+Investment_Simulator/src/main/resources/META-INF/*
+Investment_Simulator/src/main/resources/application.properties

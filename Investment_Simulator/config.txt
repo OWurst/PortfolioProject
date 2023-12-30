@@ -1,5 +1,0 @@
-# server_port=
-# datasource_password=
-# datasource_username=
-# spring.datasource.url=
-# ddl.auto=

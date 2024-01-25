@@ -19,6 +19,9 @@ public class Stock {
     @Column(length = 40, unique = false, nullable = false)
     private String company;
 
+    @Column(length = 40, unique = false, nullable = false)
+    private String industry;
+
     @Column
     private double price;
 
@@ -85,4 +88,11 @@ public class Stock {
         return count;
     }
 
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+    }
 }

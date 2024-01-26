@@ -8,15 +8,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ReturnDTO {
     private int uid;
     private String errMsg;
+    private String msg;
     private int respCode;
     private List<SingleStockReturnDTO> stocks;
     private String username;
     private String firstname;
     private String lastname;
     private double cash;
+    private String email;
 
     public ReturnDTO(int uid, String errMsg, int respCode, List<SingleStockReturnDTO> stocks, String username,
-            String firstname, String lastname, double cash) {
+            String firstname, String lastname, double cash, String msg, String email) {
         this.uid = uid;
         this.errMsg = errMsg;
         this.respCode = respCode;
@@ -25,6 +27,12 @@ public class ReturnDTO {
         this.firstname = firstname;
         this.lastname = lastname;
         this.cash = cash;
+        this.msg = msg;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public int getUid() {
@@ -33,6 +41,10 @@ public class ReturnDTO {
 
     public String getErrMsg() {
         return errMsg;
+    }
+
+    public String getMsg() {
+        return msg;
     }
 
     public int getRespCode() {

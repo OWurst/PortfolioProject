@@ -6,15 +6,30 @@ import java.util.List;
 public class ReturnBuilder {
     private int uid;
     private String errMsg;
+    private String msg;
     private int respCode;
     private List<SingleStockReturnDTO> stocks;
     private String username;
     private String firstname;
     private String lastname;
     private double cash = 0.0;
+    private String email;
+
+    public ReturnBuilder() {
+    }
 
     public ReturnBuilder withUid(int uid) {
         this.uid = uid;
+        return this;
+    }
+
+    public ReturnBuilder withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ReturnBuilder withMsg(String msg) {
+        this.msg = msg;
         return this;
     }
 
@@ -54,6 +69,6 @@ public class ReturnBuilder {
     }
 
     public ReturnDTO build() {
-        return new ReturnDTO(uid, errMsg, respCode, stocks, username, firstname, lastname, cash);
+        return new ReturnDTO(uid, errMsg, respCode, stocks, username, firstname, lastname, cash, msg, email);
     }
 }

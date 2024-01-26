@@ -10,9 +10,13 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.DTO.LoginDTO;
+import OWurst.Investment_Simulator.DTO.ReturnBuilder;
+import OWurst.Investment_Simulator.DTO.ReturnDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Entity.User;
 import OWurst.Investment_Simulator.Repository.UserRepository;
+import OWurst.Investment_Simulator.Utils.ReturnConstants;
+import OWurst.Investment_Simulator.Utils.SessionData;
 
 @Service
 public class UserServiceImpl implements AuthService, AccountService {
@@ -63,10 +67,11 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     @Override
-    public ResponseEntity<String> deleteUser(HttpServletRequest request) {
-        if (request == null) {
-            return new ResponseEntity<>("Error: Session could not be found.", HttpStatus.BAD_REQUEST);
+    public ReturnDTO deleteUser(HttpServletRequest request) {
+        if (!SessionData.validateSession(request)) {
+            return ReturnConstants.badSession();
         }
+
         try {
             User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
             userRepository.delete(user);
@@ -74,10 +79,9 @@ public class UserServiceImpl implements AuthService, AccountService {
         // TODO figure out what the two exceptions are (one for username not found and
         // one for failed delete, and handle errors separately)
         catch (Exception e) {
-            return new ResponseEntity<>("Error: Delete failed", HttpStatus.BAD_REQUEST);
+            return ReturnConstants.error("Error: Delete failed");
         }
-
-        return new ResponseEntity<>("Success: Account deleted", HttpStatus.OK);
+        return ReturnConstants.simpleSuccess("Success: Account deleted");
     }
 
     @Override
@@ -131,14 +135,20 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     @Override
-    public ResponseEntity<String> getUserObject(HttpServletRequest request) {
-        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+    public ReturnDTO getUserObject(HttpServletRequest request) {
+        ReturnDTO returnDTO;
 
-        String msg = "{\"username\": \"" + user.getUsername() + "\", \"firstname\": \"" + user.getFirstName() + "\","
-                + "\"lastname\": \"" + user.getLastName() + "\"," +
-                "\"email\": \"" + user.getEmail() + "\"}";
+        User user = userRepository.findOneById(SessionData.getUserId(request));
 
-        return ResponseEntity.ok().body(msg);
+        ReturnBuilder builder = new ReturnBuilder();
+        returnDTO = builder
+                .withUsername(user.getUsername())
+                .withFirstname(user.getFirstName())
+                .withLastname(user.getLastName())
+                .withEmail(user.getEmail())
+                .build();
+
+        return returnDTO;
     }
 
     @Override

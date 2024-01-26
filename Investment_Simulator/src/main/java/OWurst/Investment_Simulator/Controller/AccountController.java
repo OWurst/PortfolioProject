@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import OWurst.Investment_Simulator.Constants.AddressConstants;
 import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.Service.AccountService;
+import OWurst.Investment_Simulator.DTO.ReturnDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,8 +26,10 @@ public class AccountController {
     AccountService accountService;
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteUser(HttpServletRequest request) {
-        return accountService.deleteUser(request);
+    public ResponseEntity<ReturnDTO> deleteUser(HttpServletRequest request) {
+        ReturnDTO returnDTO = accountService.deleteUser(request);
+
+        return ResponseEntity.status(returnDTO.getRespCode()).body(returnDTO);
     }
 
     @PutMapping("/updatePassword")
@@ -35,8 +38,10 @@ public class AccountController {
     }
 
     @GetMapping("/user_object")
-    public ResponseEntity<String> getUserObject(HttpServletRequest request) {
-        return accountService.getUserObject(request);
+    public ResponseEntity<ReturnDTO> getUserObject(HttpServletRequest request) {
+        ReturnDTO returnDTO = accountService.getUserObject(request);
+
+        return ResponseEntity.status(returnDTO.getRespCode()).body(returnDTO);
     }
 
     @PutMapping("/updateEmail")

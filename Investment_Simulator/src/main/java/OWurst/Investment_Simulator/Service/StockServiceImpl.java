@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-//import OWurst.Investment_Simulator.Entity.Assets;
 import OWurst.Investment_Simulator.Repository.APIStockRepository;
 import OWurst.Investment_Simulator.Repository.AssetRepository;
+import OWurst.Investment_Simulator.Service.ThirdParty.ThirdPartyAPI;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -16,6 +16,9 @@ public class StockServiceImpl implements StockService {
 
     @Autowired
     AssetRepository assetRepository;
+
+    @Autowired
+    ThirdPartyAPI thirdPartyAPI;
 
     public ResponseEntity<String> updateStocks(HttpServletRequest request) {
         try {

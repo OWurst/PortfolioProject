@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Response
 from flask_cors import CORS, cross_origin
 from AlgoDriver import Algo
+import StockHandler as sh
 
 app = Flask(__name__)
 CORS(app)
@@ -18,6 +19,7 @@ def howdy():
 @app.route('/flask/drive')
 def runDriver():
     return "{\"msg\":\"" + Algo.run() + "\"}"
+
 
 
 if __name__ == "__main__":

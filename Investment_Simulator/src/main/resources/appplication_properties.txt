@@ -13,7 +13,7 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 ##    Set With Your SQL Path and PW    ##
 #########################################
 spring.datasource.url=jdbc:mysql://localhost:3306/investsimdb?createDatabaseIfNotExist=true
-spring.datasource.username=root
+spring.datasource.username=
 #fill in password for your pc
 spring.datasource.password=
 #########################################
@@ -24,6 +24,5 @@ spring.jpa.generate-ddl=true
 spring.jpa.show-sql=true
 
 # Session configuration
-spring.session.store-type=jdbc
 spring.session.jdbc.initialize-schema=always
 server.servlet.session.timeout=15m

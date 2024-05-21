@@ -1,5 +1,7 @@
 package OWurst.Investment_Simulator.Service.ThirdParty;
 
+import java.util.Date;
+
 import OWurst.Investment_Simulator.Entity.Stock;
 
 public class FlaskWrapper implements ThirdPartyAPI {
@@ -8,7 +10,7 @@ public class FlaskWrapper implements ThirdPartyAPI {
     // The Flask API will be used to get the stock data from yfinance
 
     @Override
-    public Stock getStock(String ticker) {
+    public Stock getStock(String ticker, Date startDate, Date endDate, String interval, int inter) {
         return null;
     }
 

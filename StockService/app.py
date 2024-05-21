@@ -20,7 +20,14 @@ def howdy():
 def runDriver():
     return "{\"msg\":\"" + Algo.run() + "\"}"
 
-
+@app.route('/StockService/getStock', methods=['GET'])
+def getStock():
+    stock = request.args.get('ticker')
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    interval = request.args.get('interval')
+    timesOverInterval = request.args.get('timesOverInterval')
+    return sh.getStock(stock, start_date, end_date, interval, timesOverInterval)
 
 if __name__ == "__main__":
     app.run(debug=True)

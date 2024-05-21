@@ -1,16 +1,28 @@
 package OWurst.Investment_Simulator.DTO;
 
+import java.sql.Date;
+
 public class StockDTO {
     private String ticker;
     private String company;
     private double cost;
     private long count;
+    private Date date;
 
     public StockDTO(String ticker, String company, double cost, long count) {
         this.ticker = ticker;
         this.company = company;
         this.cost = cost;
         this.count = count;
+        this.date = new Date(System.currentTimeMillis());
+    }
+
+    public StockDTO(String ticker, String company, double cost, long count, Date date) {
+        this.ticker = ticker;
+        this.company = company;
+        this.cost = cost;
+        this.count = count;
+        this.date = date;
     }
 
     public StockDTO(String ticker, double cost, long count) {
@@ -22,6 +34,14 @@ public class StockDTO {
     public StockDTO(String ticker, long count) {
         this.ticker = ticker;
         this.count = count;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getTicker() {

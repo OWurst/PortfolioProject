@@ -78,26 +78,11 @@ public class AssetServiceImpl implements AssetService {
     }
 
     private void addStockToUser(Assets assets, String company, String ticker, String cost, String count) {
-        Stock stock = assets.getStock(ticker);
-        if (stock == null) {
-            stock = new Stock(ticker, company, Double.parseDouble(cost), Long.parseLong(count));
-        } else {
-            stock.incrementStockCount(Long.parseLong(count));
-            stock.setStockPrice(Double.parseDouble(count));
-        }
-        assets.addStock(ticker, stock);
-        assetRepository.save(assets);
+
     }
 
     private void removeStockFromUser(Assets assets, String ticker, long count) {
-        Stock stock = assets.getStock(ticker);
-        if (stock.getCount() == count) {
-            assets.getStockSet().remove(ticker);
-        } else {
-            stock.decrementStockCount(count);
-            assets.getStockSet().put(ticker, stock);
-        }
-        assetRepository.save(assets);
+
     }
 
     private Object stocksetToList(Map<String, Stock> stockset) throws JsonProcessingException {
@@ -127,14 +112,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     private boolean haveAssetsToSell(Assets assets, String ticker, long count) {
-        Stock toSell = assets.getStockSet().get(ticker);
-        if (toSell == null)
-            return false;
-
-        if (toSell.getCount() >= count)
-            return true;
-        else
-            return false;
+        return false;
     }
 
     private void decrementUserCash(Assets assets, double totalCost) {

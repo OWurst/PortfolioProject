@@ -10,14 +10,14 @@ public class ReturnDTO {
     private String errMsg;
     private String msg;
     private int respCode;
-    private List<SingleStockReturnDTO> stocks;
+    private List<StockDTO> stocks;
     private String username;
     private String firstname;
     private String lastname;
     private double cash;
     private String email;
 
-    public ReturnDTO(int uid, String errMsg, int respCode, List<SingleStockReturnDTO> stocks, String username,
+    public ReturnDTO(int uid, String errMsg, int respCode, List<StockDTO> stocks, String username,
             String firstname, String lastname, double cash, String msg, String email) {
         this.uid = uid;
         this.errMsg = errMsg;
@@ -51,7 +51,7 @@ public class ReturnDTO {
         return respCode;
     }
 
-    public List<SingleStockReturnDTO> getStocks() {
+    public List<StockDTO> getStocks() {
         return stocks;
     }
 

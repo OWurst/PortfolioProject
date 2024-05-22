@@ -8,7 +8,7 @@ public class ReturnBuilder {
     private String errMsg;
     private String msg;
     private int respCode;
-    private List<SingleStockReturnDTO> stocks;
+    private List<StockDTO> stocks;
     private String username;
     private String firstname;
     private String lastname;
@@ -43,7 +43,7 @@ public class ReturnBuilder {
         return this;
     }
 
-    public ReturnBuilder withStocks(List<SingleStockReturnDTO> stocks) {
+    public ReturnBuilder withStocks(List<StockDTO> stocks) {
         this.stocks = stocks;
         return this;
     }

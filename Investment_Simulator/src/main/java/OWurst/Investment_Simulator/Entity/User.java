@@ -1,13 +1,10 @@
 package OWurst.Investment_Simulator.Entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class User {
@@ -16,7 +13,7 @@ public class User {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int userId;
 
     @Column(length = 40, unique = false, nullable = false)
     private String firstName;
@@ -33,9 +30,8 @@ public class User {
     @Column(length = 40, unique = false, nullable = false)
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "asset_id", referencedColumnName = "id")
-    private Assets assets;
+    @Column
+    private double cash;
 
     public User() {
     }
@@ -46,7 +42,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.assets = new Assets();
+        this.cash = STARTING_CASH;
     }
 
     public User(String firstname, String lastname, String username, String password) {
@@ -81,11 +77,11 @@ public class User {
         return email;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public Assets getAssets() {
-        return assets;
+    public double getCash() {
+        return cash;
     }
 }

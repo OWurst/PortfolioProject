@@ -40,7 +40,7 @@ public class UserServiceImpl implements AuthService, AccountService {
                 userRepository.save(user);
 
                 request.getSession().setAttribute("USERNAME", user.getUsername());
-                request.getSession().setAttribute("USER_ID", user.getId());
+                request.getSession().setAttribute("USER_ID", user.getUserId());
 
                 body = "Registration successful";
                 status = HttpStatus.OK;
@@ -62,7 +62,7 @@ public class UserServiceImpl implements AuthService, AccountService {
             return new ResponseEntity<>("Error: Session could not be found.", HttpStatus.BAD_REQUEST);
         }
 
-        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+        User user = userRepository.findOneByUserId((int) request.getSession().getAttribute("USER_ID"));
         return new ResponseEntity<>(user.getUsername(), HttpStatus.OK);
     }
 
@@ -73,7 +73,7 @@ public class UserServiceImpl implements AuthService, AccountService {
         }
 
         try {
-            User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+            User user = userRepository.findOneByUserId((int) request.getSession().getAttribute("USER_ID"));
             userRepository.delete(user);
         }
         // TODO figure out what the two exceptions are (one for username not found and
@@ -93,7 +93,7 @@ public class UserServiceImpl implements AuthService, AccountService {
 
         if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             request.getSession().setAttribute("USERNAME", user.getUsername());
-            request.getSession().setAttribute("USER_ID", user.getId());
+            request.getSession().setAttribute("USER_ID", user.getUserId());
 
             body = "Login successful";
             status = HttpStatus.OK;
@@ -122,7 +122,7 @@ public class UserServiceImpl implements AuthService, AccountService {
 
     @Override
     public ResponseEntity<String> changePassword(ChangePWDTO changePWDTO, HttpServletRequest request) {
-        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+        User user = userRepository.findOneByUserId((int) request.getSession().getAttribute("USER_ID"));
         if (!validPassword(changePWDTO.getNewpassword())) {
             return ResponseEntity.badRequest().body("Failed: invalid password");
         }
@@ -138,7 +138,7 @@ public class UserServiceImpl implements AuthService, AccountService {
     public ReturnDTO getUserObject(HttpServletRequest request) {
         ReturnDTO returnDTO;
 
-        User user = userRepository.findOneById(SessionData.getUserId(request));
+        User user = userRepository.findOneByUserId(SessionData.getUserId(request));
 
         ReturnBuilder builder = new ReturnBuilder();
         returnDTO = builder
@@ -153,7 +153,7 @@ public class UserServiceImpl implements AuthService, AccountService {
 
     @Override
     public ResponseEntity<String> changeEmail(String email, HttpServletRequest request) {
-        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+        User user = userRepository.findOneByUserId((int) request.getSession().getAttribute("USER_ID"));
         if (!validEmail(email)) {
             return ResponseEntity.badRequest().body("Failed: invalid email");
         }

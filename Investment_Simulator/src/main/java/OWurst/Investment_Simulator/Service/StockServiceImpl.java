@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import OWurst.Investment_Simulator.Repository.APIStockRepository;
-import OWurst.Investment_Simulator.Repository.AssetRepository;
 import OWurst.Investment_Simulator.Service.ThirdParty.ThirdPartyAPI;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -13,9 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public class StockServiceImpl implements StockService {
     @Autowired
     APIStockRepository stockRepository;
-
-    @Autowired
-    AssetRepository assetRepository;
 
     @Autowired
     ThirdPartyAPI thirdPartyAPI;

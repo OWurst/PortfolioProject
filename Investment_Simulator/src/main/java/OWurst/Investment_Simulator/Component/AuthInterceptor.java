@@ -22,7 +22,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             response.getWriter().write("ERROR: User not authenticated");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
-        } else if (userRepository.findOneById((int) request.getSession().getAttribute("USER_ID")) == null) {
+        } else if (userRepository.findOneByUserId((int) request.getSession().getAttribute("USER_ID")) == null) {
             response.getWriter().write("ERROR: User not in db");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;

@@ -31,11 +31,11 @@ class UserTests {
     void constructorsReturnStartingCash() {
         User user1 = new User("", "", "", "");
 
-        assertEquals(user1.getAssets().getCash(), User.STARTING_CASH);
+        assertEquals(user1.getCash(), User.STARTING_CASH);
 
         User user2 = new User("", "", "", "");
 
-        assertEquals(user2.getAssets().getCash(), User.STARTING_CASH);
+        assertEquals(user2.getCash(), User.STARTING_CASH);
     }
 
     @Test

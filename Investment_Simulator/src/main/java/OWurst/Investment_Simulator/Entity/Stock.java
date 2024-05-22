@@ -11,13 +11,16 @@ public class Stock {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    int stockId;
 
     @Column(length = 10, unique = false, nullable = false)
     private String ticker;
 
     @Column(length = 40, unique = false, nullable = false)
     private String company;
+
+    @Column(length = 40, unique = false, nullable = false)
+    private String industry;
 
     Stock() {
     }
@@ -27,8 +30,8 @@ public class Stock {
         this.company = company;
     }
 
-    public int getId() {
-        return id;
+    public int getStockId() {
+        return stockId;
     }
 
     public String getTicker() {
@@ -45,5 +48,13 @@ public class Stock {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
     }
 }

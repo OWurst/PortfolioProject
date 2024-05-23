@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
-from flask import Response
+from flask import Response, jsonify
 from flask_cors import CORS, cross_origin
 from AlgoDriver import Algo
 import StockHandler as sh
@@ -20,14 +20,38 @@ def howdy():
 def runDriver():
     return "{\"msg\":\"" + Algo.run() + "\"}"
 
+@app.route('/StockService/getAllTickers', methods=['GET'])
+def get_all_tickers():
+    print("Getting all tickers")
+    try:
+        tickers = sh.get_all_tickers()
+        response_body = {"tickers": tickers}
+        return jsonify(response_body), 200
+    except:
+        response_body = {"error": "An unknown error occurred while fetching tickers"}
+        return jsonify(response_body), 500
+    
 @app.route('/StockService/getStock', methods=['GET'])
-def getStock():
-    stock = request.args.get('ticker')
-    start_date = request.args.get('start_date')
-    end_date = request.args.get('end_date')
-    interval = request.args.get('interval')
-    timesOverInterval = request.args.get('timesOverInterval')
-    return sh.getStock(stock, start_date, end_date, interval, timesOverInterval)
+def get_stock_data():
+    
+    ticker = request.get_json().get("ticker")
+    if ticker is None:
+        response_body = {"error": "No ticker provided"}
+        return jsonify(response_body), 400
+    
+    try:
+        data = sh.get_stock(ticker)
+        
+        response_body = {
+            "ticker": data[0],
+            "sector": data[1],
+            "industry": data[2],
+            "price": data[3]
+            }
+        return jsonify(response_body), 200
+    except:
+        response_body = {"error": "An unknown error occurred while fetching stock data for {ticker}"}
+        return jsonify(response_body), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

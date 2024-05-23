@@ -31,9 +31,8 @@ def get_all_tickers():
         response_body = {"error": "An unknown error occurred while fetching tickers"}
         return jsonify(response_body), 500
     
-@app.route('/StockService/getStock', methods=['GET'])
+@app.route('/StockService/getStockInfo', methods=['GET'])
 def get_stock_data():
-    
     ticker = request.get_json().get("ticker")
     if ticker is None:
         response_body = {"error": "No ticker provided"}
@@ -51,6 +50,33 @@ def get_stock_data():
         return jsonify(response_body), 200
     except:
         response_body = {"error": "An unknown error occurred while fetching stock data for {ticker}"}
+        return jsonify(response_body), 500
+
+@app.route('/StockService/getStockListInfo', methods=['GET'])
+def get_stock_list_data():
+    tickers = request.get_json().get("tickers")
+    if tickers is None:
+        response_body = {"error": "Please provide a list of tickers"}
+        return jsonify(response_body), 400
+
+    try:
+        stock_list = []
+        for ticker in tickers:
+            data = sh.get_stock(ticker)
+            single_stock = {
+                "ticker": data[0],
+                "sector": data[1],
+                "industry": data[2],
+                "price": data[3]
+                }
+            stock_list.append(single_stock)
+
+        response_body = {
+            "stocks": stock_list
+            }
+        return jsonify(response_body), 200
+    except:
+        response_body = {"error": "An unknown error occurred while fetching stock data"}
         return jsonify(response_body), 500
 
 if __name__ == "__main__":

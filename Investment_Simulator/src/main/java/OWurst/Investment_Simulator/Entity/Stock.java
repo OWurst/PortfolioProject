@@ -19,7 +19,10 @@ public class Stock {
     @Column(length = 40, unique = false, nullable = false)
     private String company;
 
-    @Column(length = 40, unique = false, nullable = false)
+    @Column(length = 40, unique = false, nullable = true)
+    private String sector;
+
+    @Column(length = 40, unique = false, nullable = true)
     private String industry;
 
     Stock() {
@@ -28,6 +31,13 @@ public class Stock {
     public Stock(String ticker, String company) {
         this.ticker = ticker;
         this.company = company;
+    }
+
+    public Stock(String ticker, String company, String sector, String industry) {
+        this.ticker = ticker;
+        this.company = company;
+        this.sector = sector;
+        this.industry = industry;
     }
 
     public int getStockId() {
@@ -56,5 +66,13 @@ public class Stock {
 
     public void setIndustry(String industry) {
         this.industry = industry;
+    }
+
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
     }
 }

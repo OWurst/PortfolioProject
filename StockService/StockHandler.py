@@ -19,6 +19,26 @@ def get_all_tickers():
     tickers = df['Symbol'].tolist()
     return tickers
 
+def get_info_over_interval():
+    pass
+
+def get_info_last_x(ticker, window, count, interval):
+    if interval == "y":
+        chosenInterval = "1wk"
+    elif interval == "d" and count < 7:
+        chosenInterval = "1m"
+    elif interval == "d" and count < 30:
+        chosenInterval = "1h"
+    else:
+        chosenInterval = "1d"
+
+    try:
+        hist = yf.download(tickers=ticker, period=window, interval=chosenInterval)
+    except:
+        print("Error fetching stock history")
+    return hist
+    
+
 if __name__ == "__main__":
     print(get_stock("SPY"))
     print(get_all_tickers())

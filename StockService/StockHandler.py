@@ -42,8 +42,10 @@ def get_close_price_on_date(ticker, date):
     print(hist)
     return hist['Close'][0]
 
-def get_info_over_interval():
-    pass
+def get_info_over_interval(ticker, start_date, end_date):
+    stock = yf.Ticker(ticker)
+    hist = stock.history(start=start_date, end=end_date, interval='1d')
+    return hist
 
 def get_info_last_x(ticker, window, count, interval):
     if interval == "y":

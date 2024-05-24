@@ -1,6 +1,7 @@
 import yfinance as yf
 import ssl
 import pandas as pd
+from datetime import timedelta
 
 def get_stock(ticker):
     stock = yf.Ticker(ticker)
@@ -18,6 +19,28 @@ def get_all_tickers():
     df = table[0]
     tickers = df['Symbol'].tolist()
     return tickers
+
+def get_close_price_on_date(ticker, date):
+    stock = yf.Ticker(ticker)
+    date = pd.to_datetime(date)
+
+    # get day after date
+    next_day = date + timedelta(days=1)
+
+    year = date.year
+    month = date.month
+    day = date.day
+
+    hist = stock.history(start=date, end=next_day, interval='1d')
+    # check if hist is empty
+    while hist.empty:
+        date = date - timedelta(days=1)
+        next_day = next_day - timedelta(days=1)
+        hist = stock.history(start=date, end=next_day, interval='1d')
+
+    print("hist")
+    print(hist)
+    return hist['Close'][0]
 
 def get_info_over_interval():
     pass

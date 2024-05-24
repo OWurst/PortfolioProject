@@ -81,6 +81,27 @@ def get_stock_list_data():
 def get_info_over_interval():
     pass
 
+@app.route('/StockService/closePriceOnDate', methods=['GET'])
+def get_close_price_on_date():
+    ticker = request.get_json().get("ticker")
+    if ticker is None:
+        response_body = {"error": "No ticker provided"}
+        return jsonify(response_body), 400
+    date = request.get_json().get("date")
+    if date is None:
+        response_body = {"error": "No date provided"}
+        return jsonify(response_body), 400
+
+    try:
+        price = sh.get_close_price_on_date(ticker, date)
+
+        response_body = {"ticker": ticker, "date": date, "price": price}
+        return jsonify(response_body), 200
+    except:
+        response_body = {"error": "An unknown error occurred while fetching stock data for {ticker}".format(ticker=ticker)}
+        return jsonify(response_body), 500
+
+
 @app.route('/StockService/stockInfoLastX', methods=['GET'])
 def get_info_last_x():
     ticker = request.get_json().get("ticker")

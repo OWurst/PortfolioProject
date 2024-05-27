@@ -8,8 +8,9 @@ def get_stock(ticker):
     info = stock.info
     industry = info['industry']
     sector = info['sector']
+    company = info['longName']
     price = stock.fast_info.last_price
-    return (ticker, sector, industry, price)
+    return (ticker, sector, industry, price, company)
 
 def get_all_tickers():
     if hasattr(ssl, '_create_unverified_context'):

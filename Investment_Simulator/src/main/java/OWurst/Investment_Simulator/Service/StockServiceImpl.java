@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import OWurst.Investment_Simulator.Entity.Stock;
 //import OWurst.Investment_Simulator.Entity.Stock;
 import OWurst.Investment_Simulator.Repository.APIStockRepository;
 import OWurst.Investment_Simulator.Service.ThirdParty.ThirdPartyAPI;
@@ -58,13 +59,24 @@ public class StockServiceImpl implements StockService {
         // } catch (Exception e) {
         // return unverifiedRequester();
         // }
+        try {
 
-        ArrayList<String> allStocks = thirdPartyAPI.getAllTickers();
-        for (String stock : allStocks) {
-            System.out.println(stock);
+            ArrayList<String> allStocks = thirdPartyAPI.getAllTickers();
+            // convert allStocks to String array
+            String[] allStocksArray = new String[allStocks.size()];
+            allStocksArray = allStocks.toArray(allStocksArray);
+
+            // get all stocks from the API
+            ArrayList<Stock> stocks = thirdPartyAPI.getStocks(allStocksArray);
+            for (Stock stock : stocks) {
+                System.out.println(stock);
+            }
+            // for stock in stocks, save to database
+
+            return ResponseEntity.ok().body("Table Created");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: Table Not Created");
         }
-
-        return ResponseEntity.ok().body("Table Created");
     }
 
     private int getUserId(HttpServletRequest request) throws Exception {

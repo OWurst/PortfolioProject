@@ -25,6 +25,9 @@ public class Stock {
     @Column(length = 40, unique = false, nullable = true)
     private String industry;
 
+    @Column
+    private double price;
+
     Stock() {
     }
 
@@ -38,6 +41,14 @@ public class Stock {
         this.company = company;
         this.sector = sector;
         this.industry = industry;
+    }
+
+    public Stock(String ticker, String company, String sector, String industry, double price) {
+        this.ticker = ticker;
+        this.company = company;
+        this.sector = sector;
+        this.industry = industry;
+        this.price = price;
     }
 
     public int getStockId() {
@@ -74,6 +85,14 @@ public class Stock {
 
     public void setSector(String sector) {
         this.sector = sector;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override

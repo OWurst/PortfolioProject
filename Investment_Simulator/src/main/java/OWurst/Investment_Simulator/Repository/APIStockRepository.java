@@ -7,5 +7,5 @@ import OWurst.Investment_Simulator.Entity.Stock;
 
 @EnableJpaRepositories
 public interface APIStockRepository extends JpaRepository<Stock, Integer> {
-    public Stock findOneById(int id);
+    public Stock findOneByStockId(int id);
 }

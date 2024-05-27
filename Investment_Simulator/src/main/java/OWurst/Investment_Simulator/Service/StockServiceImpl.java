@@ -1,9 +1,12 @@
 package OWurst.Investment_Simulator.Service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+//import OWurst.Investment_Simulator.Entity.Stock;
 import OWurst.Investment_Simulator.Repository.APIStockRepository;
 import OWurst.Investment_Simulator.Service.ThirdParty.ThirdPartyAPI;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,12 +53,18 @@ public class StockServiceImpl implements StockService {
     // do all in wrapper interface, then all in this??
     // possibly another server...Quarkus??
     public ResponseEntity<String> createTable(HttpServletRequest request) {
-        try {
-            getUserId(request);
-        } catch (Exception e) {
-            return unverifiedRequester();
+        // try {
+        // getUserId(request);
+        // } catch (Exception e) {
+        // return unverifiedRequester();
+        // }
+
+        ArrayList<String> allStocks = thirdPartyAPI.getAllTickers();
+        for (String stock : allStocks) {
+            System.out.println(stock);
         }
-        return null;
+
+        return ResponseEntity.ok().body("Table Created");
     }
 
     private int getUserId(HttpServletRequest request) throws Exception {

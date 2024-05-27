@@ -75,4 +75,15 @@ public class Stock {
     public void setSector(String sector) {
         this.sector = sector;
     }
+
+    @Override
+    public String toString() {
+        return "Stock{" +
+                "stockId=" + stockId +
+                ", ticker='" + ticker + '\'' +
+                ", company='" + company + '\'' +
+                ", sector='" + sector + '\'' +
+                ", industry='" + industry + '\'' +
+                '}';
+    }
 }

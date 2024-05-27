@@ -37,11 +37,6 @@ public class StockController {
         return stockService.getStock(toSearch, request);
     }
 
-    @PostMapping("createStockTable")
-    public ResponseEntity<String> createTable(HttpServletRequest request) {
-        return stockService.createTable(request);
-    }
-
     // @GetMapping("/userStocks")
     // public ResponseEntity<Object> getAssets(HttpServletRequest request) {
     // return assetService.getStocks(request);

@@ -1,9 +1,10 @@
 package OWurst.Investment_Simulator.Service.ThirdParty;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
+import org.json.JSONObject;
+import org.json.JSONArray;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -17,6 +18,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import OWurst.Investment_Simulator.Entity.Stock;
+import OWurst.Investment_Simulator.DTO.StockDTO;
 
 @Service
 public class FlaskWrapper implements ThirdPartyAPI {
@@ -37,15 +39,13 @@ public class FlaskWrapper implements ThirdPartyAPI {
     }
 
     @Override
-    public ArrayList<Stock> getStocks(String[] tickers) {
+    public ArrayList<StockDTO> getStocks(String[] tickers) {
         HttpClient client = HttpClient.newHttpClient();
 
         // Convert the tickers array into a JSON string
-        String jsonString = new Gson().toJson(new HashMap<String, Object>() {
-            {
-                put("tickers", Arrays.asList(tickers));
-            }
-        });
+        JSONObject jsonObjectInput = new JSONObject();
+        jsonObjectInput.put("tickers", new JSONArray(Arrays.asList(tickers)));
+        String jsonString = jsonObjectInput.toString();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:5000/StockService/getStockListInfo"))
@@ -63,19 +63,22 @@ public class FlaskWrapper implements ThirdPartyAPI {
             }
 
             String content = response.body();
+            JSONObject jsonObject = new JSONObject(content);
+            JSONArray jsonArray = jsonObject.getJSONArray("stocks");
 
-            // Parse the JSON into a JsonObject
-            JsonObject jsonObject = new Gson().fromJson(content, JsonObject.class);
-
-            // Extract the 'stocks' array from the JsonObject
-            JsonArray jsonArray = jsonObject.getAsJsonArray("stocks");
-
-            // Convert the JsonArray into an ArrayList of Stock
-            Type listType = new TypeToken<ArrayList<Stock>>() {
-            }.getType();
-            ArrayList<Stock> stocks = new Gson().fromJson(jsonArray, listType);
-
+            ArrayList<StockDTO> stocks = new ArrayList<StockDTO>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject stockObject = jsonArray.getJSONObject(i);
+                StockDTO stock = new StockDTO(
+                        stockObject.getString("ticker"),
+                        stockObject.getString("company"),
+                        stockObject.getString("sector"),
+                        stockObject.getString("industry"),
+                        stockObject.getDouble("price"));
+                stocks.add(stock);
+            }
             return stocks;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;

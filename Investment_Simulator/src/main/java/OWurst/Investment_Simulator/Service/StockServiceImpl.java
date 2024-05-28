@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import OWurst.Investment_Simulator.Entity.Stock;
-//import OWurst.Investment_Simulator.Entity.Stock;
-import OWurst.Investment_Simulator.Repository.APIStockRepository;
+import OWurst.Investment_Simulator.Repository.ListedStockRepository;
 import OWurst.Investment_Simulator.Service.ThirdParty.ThirdPartyAPI;
+import OWurst.Investment_Simulator.DTO.StockDTO;
+import OWurst.Investment_Simulator.Entity.Stock;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class StockServiceImpl implements StockService {
     @Autowired
-    APIStockRepository stockRepository;
+    ListedStockRepository stockRepository;
 
     @Autowired
     ThirdPartyAPI thirdPartyAPI;
@@ -66,12 +66,14 @@ public class StockServiceImpl implements StockService {
             String[] allStocksArray = new String[allStocks.size()];
             allStocksArray = allStocks.toArray(allStocksArray);
 
+            System.out.println("First stock: ");
+            System.out.println(allStocksArray[0]);
             // get all stocks from the API
-            ArrayList<Stock> stocks = thirdPartyAPI.getStocks(allStocksArray);
-            for (Stock stock : stocks) {
-                System.out.println(stock);
+            ArrayList<StockDTO> stocks = thirdPartyAPI.getStocks(allStocksArray);
+            for (StockDTO stock : stocks) {
+                Stock newStock = new Stock(stock);
+                stockRepository.save(newStock);
             }
-            // for stock in stocks, save to database
 
             return ResponseEntity.ok().body("Table Created");
         } catch (Exception e) {

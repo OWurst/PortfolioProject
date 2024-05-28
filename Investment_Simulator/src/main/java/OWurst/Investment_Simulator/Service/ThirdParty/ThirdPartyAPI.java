@@ -1,5 +1,6 @@
 package OWurst.Investment_Simulator.Service.ThirdParty;
 
+import OWurst.Investment_Simulator.DTO.StockDTO;
 import OWurst.Investment_Simulator.Entity.Stock;
 import java.util.Date;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public interface ThirdPartyAPI {
 
     public Stock searchStock(String subString);
 
-    public ArrayList<Stock> getStocks(String[] tickers);
+    public ArrayList<StockDTO> getStocks(String[] tickers);
 
     public double predictStock(String ticker);
 

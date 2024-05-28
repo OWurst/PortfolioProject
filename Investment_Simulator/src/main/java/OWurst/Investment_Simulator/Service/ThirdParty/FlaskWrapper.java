@@ -11,11 +11,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.lang.reflect.Type;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import OWurst.Investment_Simulator.Entity.Stock;
 import OWurst.Investment_Simulator.DTO.StockDTO;
@@ -105,17 +100,14 @@ public class FlaskWrapper implements ThirdPartyAPI {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             String content = response.body();
-            // Parse the JSON into a JsonObject
-            JsonObject jsonObject = new Gson().fromJson(content, JsonObject.class);
+            JSONObject jsonObject = new JSONObject(content);
 
-            // Extract the 'tickers' array from the JsonObject
-            JsonArray jsonArray = jsonObject.getAsJsonArray("tickers");
+            JSONArray jsonArray = jsonObject.getJSONArray("tickers");
 
-            // Convert the JsonArray into an ArrayList
-            Type listType = new TypeToken<ArrayList<String>>() {
-            }.getType();
-            ArrayList<String> tickers = new Gson().fromJson(jsonArray, listType);
-
+            ArrayList<String> tickers = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                tickers.add(jsonArray.getString(i));
+            }
             return tickers;
         } catch (Exception e) {
             e.printStackTrace();

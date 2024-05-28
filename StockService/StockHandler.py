@@ -2,14 +2,37 @@ import yfinance as yf
 import ssl
 import pandas as pd
 from datetime import timedelta
+import traceback
 
 def get_stock(ticker):
     stock = yf.Ticker(ticker)
     info = stock.info
-    industry = info['industry']
-    sector = info['sector']
-    company = info['longName']
-    price = stock.fast_info.last_price
+    try:
+        try:
+            industry = info['industry']
+        except:
+            industry = "Unknown"
+        try:
+            sector = info['sector']
+        except:
+            sector = "Unknown"
+        try:
+            company = info['longName']
+        except:
+            company = "Unknown"
+        try:
+            # price needs to be a float
+            price = stock.fast_info.last_price
+            price = float(price)
+        except:
+            # if price is not available, set to -1.0
+            price = -1.0
+
+    except:
+        print("Error fetching stock data")
+        traceback.print_exc()
+        print("failure on ticker: " + ticker)
+        return None
     return (ticker, sector, industry, price, company)
 
 def get_all_tickers():

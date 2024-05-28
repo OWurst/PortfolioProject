@@ -5,6 +5,7 @@ from flask_cors import CORS, cross_origin
 from AlgoDriver import Algo
 import StockHandler as sh
 import re
+import traceback
 
 app = Flask(__name__)
 CORS(app)
@@ -80,6 +81,8 @@ def get_stock_list_data():
             }
         return jsonify(response_body), 200
     except:
+        # print the exception
+        traceback.print_exc()
         response_body = {"error": "An unknown error occurred while fetching stock data"}
         return jsonify(response_body), 500
 

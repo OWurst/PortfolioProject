@@ -5,6 +5,8 @@ import java.sql.Date;
 public class StockDTO {
     private String ticker;
     private String company;
+    private String industry;
+    private String sector;
     private double cost;
     private long count;
     private Date date;
@@ -22,6 +24,34 @@ public class StockDTO {
         this.company = company;
         this.cost = cost;
         this.count = count;
+        this.date = date;
+    }
+
+    public StockDTO(String ticker, String company, double cost, long count, String industry, String sector) {
+        this.ticker = ticker;
+        this.company = company;
+        this.cost = cost;
+        this.count = count;
+        this.industry = industry;
+        this.sector = sector;
+        this.date = new Date(System.currentTimeMillis());
+    }
+
+    public StockDTO(String ticker, String company, String sector, String industry, double cost) {
+        this.ticker = ticker;
+        this.company = company;
+        this.cost = cost;
+        this.industry = industry;
+        this.sector = sector;
+    }
+
+    public StockDTO(String ticker, String company, double cost, long count, String industry, String sector, Date date) {
+        this.ticker = ticker;
+        this.company = company;
+        this.cost = cost;
+        this.count = count;
+        this.industry = industry;
+        this.sector = sector;
         this.date = date;
     }
 
@@ -76,4 +106,19 @@ public class StockDTO {
         this.count = count;
     }
 
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
 }

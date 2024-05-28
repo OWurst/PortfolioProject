@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import OWurst.Investment_Simulator.DTO.StockDTO;
+
 @Entity
 public class Stock {
     @Id
@@ -16,7 +18,7 @@ public class Stock {
     @Column(length = 10, unique = false, nullable = false)
     private String ticker;
 
-    @Column(length = 40, unique = false, nullable = false)
+    @Column(length = 100, unique = false, nullable = false)
     private String company;
 
     @Column(length = 40, unique = false, nullable = true)
@@ -49,6 +51,14 @@ public class Stock {
         this.sector = sector;
         this.industry = industry;
         this.price = price;
+    }
+
+    public Stock(StockDTO stockDTO) {
+        this.ticker = stockDTO.getTicker();
+        this.company = stockDTO.getCompany();
+        this.sector = stockDTO.getSector();
+        this.industry = stockDTO.getIndustry();
+        this.price = stockDTO.getCost();
     }
 
     public int getStockId() {

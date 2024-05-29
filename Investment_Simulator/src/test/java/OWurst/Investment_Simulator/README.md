@@ -1,0 +1,2 @@
+## Testing
+I am going to unit test every class in this project. It may be pointless to test every DTO and Entity as they are pretty much just POJOs, but it is better to be too rigorous than too lazy. At worst, this will slow me down and force me to think a little more carefully about my design decisions.

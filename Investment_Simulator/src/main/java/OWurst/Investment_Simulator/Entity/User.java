@@ -84,4 +84,24 @@ public class User {
     public double getCash() {
         return cash;
     }
+
+    public void setCash(double cash) {
+        this.cash = cash;
+    }
+
+    public boolean withdrawCash(double amount) {
+        if (amount > cash) {
+            return false;
+        }
+        cash -= amount;
+        return true;
+    }
+
+    public boolean depositCash(double amount) {
+        if (amount < 0) {
+            return false;
+        }
+        cash += amount;
+        return true;
+    }
 }

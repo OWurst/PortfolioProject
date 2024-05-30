@@ -11,59 +11,40 @@ public class StockDTO {
     private long count;
     private Date date;
 
-    public StockDTO(String ticker, String company, double cost, long count) {
-        this.ticker = ticker;
-        this.company = company;
-        this.cost = cost;
-        this.count = count;
-        this.date = new Date(System.currentTimeMillis());
-    }
-
-    public StockDTO(String ticker, String company, double cost, long count, Date date) {
-        this.ticker = ticker;
-        this.company = company;
-        this.cost = cost;
-        this.count = count;
-        this.date = date;
-    }
-
-    public StockDTO(String ticker, String company, double cost, long count, String industry, String sector) {
-        this.ticker = ticker;
-        this.company = company;
-        this.cost = cost;
-        this.count = count;
-        this.industry = industry;
-        this.sector = sector;
-        this.date = new Date(System.currentTimeMillis());
-    }
-
-    public StockDTO(String ticker, String company, String sector, String industry, double cost) {
-        this.ticker = ticker;
-        this.company = company;
-        this.cost = cost;
-        this.industry = industry;
-        this.sector = sector;
-    }
-
-    public StockDTO(String ticker, String company, double cost, long count, String industry, String sector, Date date) {
-        this.ticker = ticker;
-        this.company = company;
-        this.cost = cost;
-        this.count = count;
-        this.industry = industry;
-        this.sector = sector;
-        this.date = date;
+    public StockDTO() {
     }
 
     public StockDTO(String ticker, double cost, long count) {
-        this.ticker = ticker;
-        this.cost = cost;
-        this.count = count;
+        // constructor for returning simple changes (change in ownership, change in
+        // price)
+        this(ticker, null, cost, count, null, null, null);
     }
 
-    public StockDTO(String ticker, long count) {
+    public StockDTO(String ticker, double cost, Date date) {
+        // constructor for returning historical data
+        this(ticker, null, cost, 0, null, null, date);
+    }
+
+    public StockDTO(String ticker, String company, String sector, String industry, double cost) {
+        // constructor for returning full current stock information
+        // (searching for a stock, building stock table)
+        this(ticker, company, cost, 0, industry, sector, null);
+    }
+
+    public StockDTO(String ticker, String company, double cost, long count, String industry, String sector) {
+        // constructor for returning full current stock information for a given user
+        this(ticker, company, cost, count, industry, sector, null);
+    }
+
+    public StockDTO(String ticker, String company, double cost, long count, String industry, String sector, Date date) {
+        // overloaded constructor for returning full stock information
         this.ticker = ticker;
+        this.company = company;
+        this.cost = cost;
         this.count = count;
+        this.industry = industry;
+        this.sector = sector;
+        this.date = date;
     }
 
     public Date getDate() {

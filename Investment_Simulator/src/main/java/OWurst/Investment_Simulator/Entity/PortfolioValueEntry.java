@@ -24,7 +24,7 @@ public class PortfolioValueEntry {
     @Column
     Date entryDate;
 
-    PortfolioValueEntry() {
+    public PortfolioValueEntry() {
     }
 
     public PortfolioValueEntry(double value, Date entryDate) {

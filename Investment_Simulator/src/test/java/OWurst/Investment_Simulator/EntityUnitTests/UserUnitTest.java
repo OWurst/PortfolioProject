@@ -28,10 +28,12 @@ public class UserUnitTest {
         assertTrue(bareUser instanceof User);
     }
 
+    @Test
     public void testFullConstructorReturnsCorrectType() {
         assertTrue(fullConstructorUser instanceof User);
     }
 
+    @Test
     public void testNoEmailConstructorReturnsCorrectType() {
         assertTrue(noEmailUser instanceof User);
     }

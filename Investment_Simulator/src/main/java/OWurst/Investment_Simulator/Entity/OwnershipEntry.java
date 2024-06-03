@@ -53,10 +53,6 @@ public class OwnershipEntry {
         this.numShares = numShares;
     }
 
-    public void setOwnershipId(int ownershipId) {
-        this.ownershipId = ownershipId;
-    }
-
     public void setStockId(int stockId) {
         this.stockId = stockId;
     }
@@ -74,7 +70,7 @@ public class OwnershipEntry {
     }
 
     public boolean decrementShares(int numShares) {
-        if (numShares < 0 || numShares > this.numShares) {
+        if (numShares < 0) {
             return false;
         }
         if (numShares > this.numShares) {

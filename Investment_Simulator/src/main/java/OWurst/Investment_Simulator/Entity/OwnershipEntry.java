@@ -33,10 +33,6 @@ public class OwnershipEntry {
         this.numShares = numShares;
     }
 
-    public int getOwnershipId() {
-        return ownershipId;
-    }
-
     public int getStockId() {
         return stockId;
     }

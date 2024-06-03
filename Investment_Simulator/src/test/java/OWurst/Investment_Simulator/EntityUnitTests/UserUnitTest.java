@@ -1,4 +1,4 @@
-package OWurst.Investment_Simulator.EntityTests;
+package OWurst.Investment_Simulator.EntityUnitTests;
 
 import OWurst.Investment_Simulator.Entity.User;
 

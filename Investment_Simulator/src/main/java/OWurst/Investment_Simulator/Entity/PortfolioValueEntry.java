@@ -32,10 +32,6 @@ public class PortfolioValueEntry {
         this.entryDate = entryDate;
     }
 
-    public int getEntryId() {
-        return entryId;
-    }
-
     public double getValue() {
         return value;
     }

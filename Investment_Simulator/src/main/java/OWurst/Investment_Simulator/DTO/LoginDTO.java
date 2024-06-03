@@ -1,7 +1,6 @@
 package OWurst.Investment_Simulator.DTO;
 
 public class LoginDTO {
-
     private String username;
     private String password;
 

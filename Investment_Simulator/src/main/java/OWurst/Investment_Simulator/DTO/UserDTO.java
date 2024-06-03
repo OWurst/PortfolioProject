@@ -1,9 +1,7 @@
 package OWurst.Investment_Simulator.DTO;
 
 public class UserDTO {
-
     private int id;
-
     private String firstname;
     private String lastname;
     private String username;

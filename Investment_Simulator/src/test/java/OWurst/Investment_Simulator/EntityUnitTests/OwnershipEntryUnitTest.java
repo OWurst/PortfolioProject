@@ -1,4 +1,4 @@
-package OWurst.Investment_Simulator.EntityTests;
+package OWurst.Investment_Simulator.EntityUnitTests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

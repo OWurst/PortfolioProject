@@ -30,19 +30,11 @@ public class Stock {
     @Column
     private double price;
 
-    Stock() {
-    }
-
-    public Stock(String ticker, String company) {
-        this.ticker = ticker;
-        this.company = company;
+    public Stock() {
     }
 
     public Stock(String ticker, String company, String sector, String industry) {
-        this.ticker = ticker;
-        this.company = company;
-        this.sector = sector;
-        this.industry = industry;
+        this(ticker, company, sector, industry, 0.0);
     }
 
     public Stock(String ticker, String company, String sector, String industry, double price) {
@@ -113,6 +105,7 @@ public class Stock {
                 ", company='" + company + '\'' +
                 ", sector='" + sector + '\'' +
                 ", industry='" + industry + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

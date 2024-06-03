@@ -12,7 +12,7 @@ public class ReturnBuilder {
     private String username;
     private String firstname;
     private String lastname;
-    private double cash = 0.0;
+    private double cash;
     private String email;
 
     public ReturnBuilder() {

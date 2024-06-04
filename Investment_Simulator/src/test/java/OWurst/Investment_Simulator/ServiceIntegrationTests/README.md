@@ -1,0 +1,2 @@
+## Integration Tests
+I am focusing on integration tests for my service layer because services rely on so many other classes that I think the best I can do is make sure that those dependencies have been tested as well as possible rather than unit test this layer.

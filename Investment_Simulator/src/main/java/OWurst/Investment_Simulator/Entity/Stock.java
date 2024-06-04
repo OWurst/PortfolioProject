@@ -37,20 +37,17 @@ public class Stock {
         this(ticker, company, sector, industry, 0.0);
     }
 
+    public Stock(StockDTO stockDTO) {
+        this(stockDTO.getTicker(), stockDTO.getCompany(), stockDTO.getSector(), stockDTO.getIndustry(),
+                stockDTO.getCost());
+    }
+
     public Stock(String ticker, String company, String sector, String industry, double price) {
         this.ticker = ticker;
         this.company = company;
         this.sector = sector;
         this.industry = industry;
         this.price = price;
-    }
-
-    public Stock(StockDTO stockDTO) {
-        this.ticker = stockDTO.getTicker();
-        this.company = stockDTO.getCompany();
-        this.sector = stockDTO.getSector();
-        this.industry = stockDTO.getIndustry();
-        this.price = stockDTO.getCost();
     }
 
     public int getStockId() {

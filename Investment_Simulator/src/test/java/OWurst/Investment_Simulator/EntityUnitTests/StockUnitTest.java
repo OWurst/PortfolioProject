@@ -20,7 +20,7 @@ public class StockUnitTest {
     @Before
     public void setUp() {
         baseStock = new Stock();
-        unpricedStock = new Stock("TSLA", "Tesla", "Consumer Cyclical", "Auto Manufacturers", 0.0);
+        unpricedStock = new Stock("TSLA", "Tesla", "Consumer Cyclical", "Auto Manufacturers");
         fullStock = new Stock("TSLA", "Tesla", "Consumer Cyclical", "Auto Manufacturers", 700.0);
         stockDTO = new StockDTO("TSLA", "Tesla", "Consumer Cyclical", "Auto Manufacturers", 700.0);
         dtoConstructorStock = new Stock(stockDTO);

@@ -163,7 +163,10 @@ public class StockEntityRepositoryIntegrationTest {
         stock.setPrice(150.0);
         stockRepository.save(stock);
 
-        Stock foundStock = stockRepository.findOneByTicker("AAPL");
+        stock = stockRepository.findOneByTicker("AAPL");
+        int id = stock.getStockId();
+
+        Stock foundStock = stockRepository.findOneByStockId(id);
         assertEquals(150.0, foundStock.getPrice(), 0.0);
     }
 

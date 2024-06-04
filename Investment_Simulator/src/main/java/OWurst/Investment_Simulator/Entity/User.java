@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class User {
     public static final double STARTING_CASH = 100000.0;
 
@@ -27,7 +29,7 @@ public class User {
     @Column(length = 255, nullable = false)
     private String password;
 
-    @Column(length = 40, unique = false, nullable = false)
+    @Column(length = 40, unique = false, nullable = true)
     private String email;
 
     @Column

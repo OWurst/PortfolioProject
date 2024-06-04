@@ -15,10 +15,10 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int stockId;
 
-    @Column(length = 10, unique = false, nullable = false)
+    @Column(length = 10, unique = true, nullable = false)
     private String ticker;
 
-    @Column(length = 100, unique = false, nullable = false)
+    @Column(length = 100, unique = false, nullable = true)
     private String company;
 
     @Column(length = 40, unique = false, nullable = true)

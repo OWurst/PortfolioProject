@@ -11,13 +11,11 @@ import OWurst.Investment_Simulator.Entity.Stock;
 public interface ListedStockRepository extends JpaRepository<Stock, Integer> {
     public Stock findOneByTicker(String symbol);
 
-    public Stock findOneByCompany(String companyName);
-
     public List<Stock> findByCompanyContaining(String companyName);
 
     public List<Stock> findByTickerContaining(String ticker);
 
-    public List<Stock> findByIndustry(String industry);
+    public List<Stock> findBySectorContaining(String sector);
 
-    public List<Stock> findByIndustryContaining(String industry);
+    public Stock findOneByStockId(int stockId);
 }

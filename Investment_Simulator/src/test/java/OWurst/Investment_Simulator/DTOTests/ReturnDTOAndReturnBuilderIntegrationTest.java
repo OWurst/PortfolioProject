@@ -1,6 +1,7 @@
 package OWurst.Investment_Simulator.DTOTests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -171,5 +172,57 @@ public class ReturnDTOAndReturnBuilderIntegrationTest {
         assertEquals(fullReturnDTO.getCash(), returnDTO.getCash(), 0.0);
         assertEquals(fullReturnDTO.getMsg(), returnDTO.getMsg());
         assertEquals(fullReturnDTO.getEmail(), returnDTO.getEmail());
+    }
+
+    @Test
+    public void testReturnDTOToStringOnNormal() {
+        returnDTO = builder
+                .withUid(1)
+                .withErrMsg("errMsg")
+                .withRespCode(1)
+                .withStocks(stocks)
+                .withUsername("username")
+                .withFirstname("firstname")
+                .withLastname("lastname")
+                .withCash(1.0).withMsg("msg")
+                .withEmail("email")
+                .build();
+
+        String result = returnDTO.toString();
+        // return should be in json format and order does not matter
+        assertTrue(result.contains("\"uid\":1"));
+        assertTrue(result.contains("\"errMsg\":\"errMsg\""));
+        assertTrue(result.contains("\"respCode\":1"));
+        assertTrue(result.contains("\"stocks\":[]"));
+        assertTrue(result.contains("\"username\":\"username\""));
+        assertTrue(result.contains("\"firstname\":\"firstname\""));
+        assertTrue(result.contains("\"lastname\":\"lastname\""));
+        assertTrue(result.contains("\"cash\":1.0"));
+        assertTrue(result.contains("\"msg\":\"msg\""));
+        assertTrue(result.contains("\"email\":\"email\""));
+    }
+
+    @Test
+    public void testReturnDTOToStringOnNull() {
+        returnDTO = builder.build();
+        String result = returnDTO.toString();
+        // return should be in json format and order does not matter
+        assertTrue(result.contains("\"uid\":0"));
+        assertTrue(result.contains("\"respCode\":0"));
+        assertTrue(result.contains("\"cash\":0.0"));
+        assertFalse(result.contains("null"));
+    }
+
+    @Test
+    public void testReturnDTOToStringOnEmpty() {
+        returnDTO = new ReturnDTO(0, null, 0, null, null, null, null, 0.0, null, null);
+        String result = returnDTO.toString(true);
+        String expected = "{"
+                + "\"errMsg\": \"Error converting ReturnDTO to JSON\","
+                + "\"respCode\": 500,"
+                + "\"uid\": " + 0
+                + "}";
+        // return should be in json format and order does not matter
+        assertEquals(expected, result);
     }
 }

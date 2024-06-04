@@ -71,11 +71,19 @@ public class ReturnDTO {
         return cash;
     }
 
+    @Override
     public String toString() {
+        return this.toString(false);
+    }
+
+    // for test purposes
+    public String toString(boolean test) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
         try {
+            if (test) {
+                throw new Exception();
+            }
             return objectMapper.writeValueAsString(this);
         } catch (Exception e) {
             String resp = "{"

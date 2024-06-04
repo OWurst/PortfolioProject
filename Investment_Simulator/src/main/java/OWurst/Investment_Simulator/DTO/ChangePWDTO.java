@@ -27,9 +27,4 @@ public class ChangePWDTO {
     public void setNewpassword(String newpassword) {
         this.newpassword = newpassword;
     }
-
-    @Override
-    public String toString() {
-        return "ChangePWDTO [oldPass=" + oldpassword + ", newPass=" + newpassword + "]";
-    }
 }

@@ -20,7 +20,7 @@ public class PortfolioValueEntryUnitTest {
     public void setUp() {
         bareEntry = new PortfolioValueEntry();
         currDate = new Date();
-        constructorEntry = new PortfolioValueEntry(100.0, currDate);
+        constructorEntry = new PortfolioValueEntry(1, 100.0, currDate);
     }
 
     @Test
@@ -56,5 +56,17 @@ public class PortfolioValueEntryUnitTest {
         Date newDate = new Date();
         bareEntry.setEntryDate(newDate);
         assertEquals(newDate, bareEntry.getEntryDate());
+    }
+
+    @Test
+    public void testGetUserId() {
+        assertEquals(1, constructorEntry.getUserId());
+    }
+
+    @Test
+    public void testSetUserId() {
+        assertEquals(0, bareEntry.getUserId());
+        bareEntry.setUserId(2);
+        assertEquals(2, bareEntry.getUserId());
     }
 }

@@ -24,10 +24,14 @@ public class PortfolioValueEntry {
     @Column
     Date entryDate;
 
+    @Column
+    int userId;
+
     public PortfolioValueEntry() {
     }
 
-    public PortfolioValueEntry(double value, Date entryDate) {
+    public PortfolioValueEntry(int userId, double value, Date entryDate) {
+        this.userId = userId;
         this.value = value;
         this.entryDate = entryDate;
     }
@@ -46,5 +50,13 @@ public class PortfolioValueEntry {
 
     public void setEntryDate(Date entryDate) {
         this.entryDate = entryDate;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

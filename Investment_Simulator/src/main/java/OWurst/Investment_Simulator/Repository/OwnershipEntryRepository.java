@@ -10,4 +10,8 @@ import OWurst.Investment_Simulator.Entity.OwnershipEntry;
 @EnableJpaRepositories
 public interface OwnershipEntryRepository extends JpaRepository<OwnershipEntry, Integer> {
     public List<OwnershipEntry> findByUserId(int userId);
+
+    public OwnershipEntry findOneByUserIdAndStockId(int userId, int stockId);
+
+    public OwnershipEntry findOneByOwnershipId(int ownershipId);
 }

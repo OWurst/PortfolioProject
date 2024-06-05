@@ -24,10 +24,6 @@ public class BaseController {
 
     @PostMapping("/core/createStockTable")
     public ResponseEntity<String> createTable(HttpServletRequest request) {
-        // just return hello 200 for now
-        // return new ResponseEntity<String>("{\"msg\":\"Hello From Spring\"}", null,
-        // 200);
-
         return stockService.createTable(request);
     }
 }

@@ -9,7 +9,7 @@ import OWurst.Investment_Simulator.DTO.UserDTO;
 public interface AuthService {
     public int addUser(UserDTO userDTO) throws Exception;
 
-    public ResponseEntity<String> loginUser(LoginDTO loginDTO, HttpServletRequest request);
+    public int loginUser(LoginDTO loginDTO) throws Exception;
 
     public ResponseEntity<String> logoutUser(HttpServletRequest request);
 }

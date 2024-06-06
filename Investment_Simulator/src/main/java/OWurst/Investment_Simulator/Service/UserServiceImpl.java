@@ -16,6 +16,7 @@ import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Entity.User;
 import OWurst.Investment_Simulator.Repository.UserRepository;
 import OWurst.Investment_Simulator.Utils.InputExceptions.IllegalRegistrationException;
+import OWurst.Investment_Simulator.Utils.InputExceptions.InvalidLoginException;
 import OWurst.Investment_Simulator.Utils.ReturnConstants;
 import OWurst.Investment_Simulator.Utils.SessionData;
 
@@ -71,23 +72,14 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     @Override
-    public ResponseEntity<String> loginUser(LoginDTO loginDTO, HttpServletRequest request) {
-        String body;
-        HttpStatus status;
-
+    public int loginUser(LoginDTO loginDTO) throws Exception {
         User user = userRepository.findByUsername(loginDTO.getUsername());
 
         if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            request.getSession().setAttribute("USERNAME", user.getUsername());
-            request.getSession().setAttribute("USER_ID", user.getUserId());
-
-            body = "Login successful";
-            status = HttpStatus.OK;
+            return user.getUserId();
         } else {
-            body = "Login unsuccessful: Invalid username or password";
-            status = HttpStatus.BAD_REQUEST;
+            throw new InvalidLoginException();
         }
-        return new ResponseEntity<>(body, status);
     }
 
     @Override

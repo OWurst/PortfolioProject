@@ -15,7 +15,7 @@ import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Service.AuthService;
 import OWurst.Investment_Simulator.Utils.ReturnConstants;
 import OWurst.Investment_Simulator.Utils.InputExceptions.IllegalRegistrationException;
-
+import OWurst.Investment_Simulator.Utils.InputExceptions.InvalidLoginException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -38,19 +38,35 @@ public class AuthController {
                     .body(ReturnConstants.unknownError(e.getMessage()));
         }
 
-        request.getSession().setAttribute("USERNAME", username);
-        request.getSession().setAttribute("USER_ID", userId);
+        setSessionAttributes(request, username, userId);
 
         return ResponseEntity.ok().body(ReturnConstants.simpleSuccess("Account created successfully", userId));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO, HttpServletRequest request) {
-        return authService.loginUser(loginDTO, request);
+    public ResponseEntity<ReturnDTO> loginUser(@RequestBody LoginDTO loginDTO, HttpServletRequest request) {
+        String username = loginDTO.getUsername();
+        int userId;
+        try {
+            userId = authService.loginUser(loginDTO);
+        } catch (InvalidLoginException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ReturnConstants.handled400Error(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ReturnConstants.unknownError(e.getMessage()));
+        }
+
+        setSessionAttributes(request, username, userId);
+        return ResponseEntity.ok().body(ReturnConstants.simpleSuccess("Login successful", userId));
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logoutUser(HttpServletRequest request) {
         return authService.logoutUser(request);
+    }
+
+    private void setSessionAttributes(HttpServletRequest request, String username, int userId) {
+        request.getSession().setAttribute("USERNAME", username);
+        request.getSession().setAttribute("USER_ID", userId);
     }
 }

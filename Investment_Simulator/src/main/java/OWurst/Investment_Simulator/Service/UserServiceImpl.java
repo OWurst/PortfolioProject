@@ -1,7 +1,6 @@
 package OWurst.Investment_Simulator.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -80,22 +79,6 @@ public class UserServiceImpl implements AuthService, AccountService {
         } else {
             throw new InvalidLoginException();
         }
-    }
-
-    @Override
-    public ResponseEntity<String> logoutUser(HttpServletRequest request) {
-        String body;
-        HttpStatus status;
-
-        try {
-            request.getSession().invalidate();
-            body = "Logout successful";
-            status = HttpStatus.OK;
-        } catch (IllegalStateException e) {
-            body = "Logout unsuccessful: " + e.getMessage();
-            status = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(body, status);
     }
 
     @Override

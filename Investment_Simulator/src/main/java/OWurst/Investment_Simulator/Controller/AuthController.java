@@ -61,8 +61,14 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logoutUser(HttpServletRequest request) {
-        return authService.logoutUser(request);
+    public ResponseEntity<ReturnDTO> logoutUser(HttpServletRequest request) {
+        try {
+            request.getSession().invalidate();
+            return ResponseEntity.ok().body(ReturnConstants.simpleSuccess("Logout successful", -1));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ReturnConstants.unknownError("Logout unsuccessful: " + e.getMessage()));
+        }
     }
 
     private void setSessionAttributes(HttpServletRequest request, String username, int userId) {

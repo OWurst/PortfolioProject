@@ -8,8 +8,12 @@ public class ReturnConstants {
         return new ReturnBuilder().withErrMsg("Error: Session could not be found.").withRespCode(400).build();
     }
 
-    public static ReturnDTO error(String msg) {
-        return new ReturnBuilder().withErrMsg(msg).withRespCode(400).build();
+    public static ReturnDTO unverifiedSession() {
+        return new ReturnBuilder().withErrMsg("Error: Session could not be verified.").withRespCode(400).build();
+    }
+
+    public static ReturnDTO unknownError(String msg) {
+        return new ReturnBuilder().withErrMsg(msg).withRespCode(500).build();
     }
 
     public static ReturnDTO simpleSuccess(String msg) {

@@ -1,6 +1,7 @@
 package OWurst.Investment_Simulator.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import OWurst.Investment_Simulator.DTO.ReturnDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Service.AuthService;
 import OWurst.Investment_Simulator.Utils.ReturnConstants;
+import OWurst.Investment_Simulator.Utils.InputExceptions.IllegalRegistrationException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -23,8 +25,23 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveUser(@RequestBody UserDTO userDTO, HttpServletRequest request) {
-        return authService.addUser(userDTO, request);
+    public ResponseEntity<ReturnDTO> saveUser(@RequestBody UserDTO userDTO, HttpServletRequest request) {
+        String username = userDTO.getUsername();
+        int userId;
+
+        try {
+            userId = authService.addUser(userDTO);
+        } catch (IllegalRegistrationException e) {
+            return ResponseEntity.badRequest().body(ReturnConstants.handled400Error(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ReturnConstants.unknownError(e.getMessage()));
+        }
+
+        request.getSession().setAttribute("USERNAME", username);
+        request.getSession().setAttribute("USER_ID", userId);
+
+        return ResponseEntity.ok().body(ReturnConstants.simpleSuccess("Account created successfully", userId));
     }
 
     @PostMapping("/login")

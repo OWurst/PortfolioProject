@@ -64,7 +64,7 @@ public class AccountController {
         }
 
         try {
-            return ResponseEntity.ok().body(ReturnConstants.simpleSuccess(accountService.getUsername(uid)));
+            return ResponseEntity.ok().body(ReturnConstants.simpleSuccess(accountService.getUsername(uid), uid));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ReturnConstants.unknownError(e.getMessage()));
         }

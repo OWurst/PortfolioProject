@@ -1,6 +1,5 @@
 package OWurst.Investment_Simulator.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,8 +20,11 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @CrossOrigin(origins = AddressConstants.FRONTEND_URL, allowCredentials = "true")
 public class AuthController {
-    @Autowired
     private AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/save")
     public ResponseEntity<ReturnDTO> saveUser(@RequestBody UserDTO userDTO, HttpServletRequest request) {

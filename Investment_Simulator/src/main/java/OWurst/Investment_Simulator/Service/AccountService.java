@@ -8,7 +8,7 @@ import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.DTO.ReturnDTO;
 
 public interface AccountService {
-    public ResponseEntity<String> getUsername(HttpServletRequest request);
+    public String getUsername(int userId);
 
     public ReturnDTO deleteUser(HttpServletRequest request);
 

@@ -57,13 +57,9 @@ public class UserServiceImpl implements AuthService, AccountService {
     }
 
     @Override
-    public ResponseEntity<String> getUsername(HttpServletRequest request) {
-        if (request == null) {
-            return new ResponseEntity<>("Error: Session could not be found.", HttpStatus.BAD_REQUEST);
-        }
-
-        User user = userRepository.findOneByUserId((int) request.getSession().getAttribute("USER_ID"));
-        return new ResponseEntity<>(user.getUsername(), HttpStatus.OK);
+    public String getUsername(int userId) {
+        User user = userRepository.findOneByUserId(userId);
+        return user.getUsername();
     }
 
     @Override
@@ -79,7 +75,7 @@ public class UserServiceImpl implements AuthService, AccountService {
         // TODO figure out what the two exceptions are (one for username not found and
         // one for failed delete, and handle errors separately)
         catch (Exception e) {
-            return ReturnConstants.error("Error: Delete failed");
+            return ReturnConstants.unknownError("Error: Delete failed");
         }
         return ReturnConstants.simpleSuccess("Success: Account deleted");
     }

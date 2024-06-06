@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import OWurst.Investment_Simulator.Constants.AddressConstants;
 import OWurst.Investment_Simulator.DTO.ChangePWDTO;
 import OWurst.Investment_Simulator.Service.AccountService;
+import OWurst.Investment_Simulator.Utils.ReturnConstants;
 import OWurst.Investment_Simulator.DTO.ReturnDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,5 +48,25 @@ public class AccountController {
     @PutMapping("/updateEmail")
     public ResponseEntity<String> updateEmail(@RequestParam String email, HttpServletRequest request) {
         return accountService.changeEmail(email, request);
+    }
+
+    @GetMapping("/get-username")
+    public ResponseEntity<ReturnDTO> getUsername(HttpServletRequest request) {
+        if (request == null) {
+            return ResponseEntity.badRequest().body(ReturnConstants.badSession());
+        }
+
+        int uid;
+        try {
+            uid = (int) request.getSession().getAttribute("USER_ID");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ReturnConstants.unverifiedSession());
+        }
+
+        try {
+            return ResponseEntity.ok().body(ReturnConstants.simpleSuccess(accountService.getUsername(uid)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ReturnConstants.unknownError(e.getMessage()));
+        }
     }
 }

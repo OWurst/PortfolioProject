@@ -6,4 +6,10 @@ public class InputExceptions {
             super(message);
         }
     }
+
+    public static class InvalidLoginException extends Exception {
+        public InvalidLoginException() {
+            super("Invalid login credentials.");
+        }
+    }
 }

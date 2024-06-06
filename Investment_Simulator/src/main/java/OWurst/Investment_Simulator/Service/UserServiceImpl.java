@@ -15,6 +15,7 @@ import OWurst.Investment_Simulator.DTO.ReturnDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Entity.User;
 import OWurst.Investment_Simulator.Repository.UserRepository;
+import OWurst.Investment_Simulator.Utils.InputExceptions.IllegalRegistrationException;
 import OWurst.Investment_Simulator.Utils.ReturnConstants;
 import OWurst.Investment_Simulator.Utils.SessionData;
 
@@ -27,10 +28,7 @@ public class UserServiceImpl implements AuthService, AccountService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity<String> addUser(UserDTO userDTO, HttpServletRequest request) {
-        String body;
-        HttpStatus status;
-
+    public int addUser(UserDTO userDTO) throws Exception {
         if (userRepository.findByUsername(userDTO.getUsername()) == null) {
             if (userDTOFieldsAreAllLegal(userDTO)) {
                 User user = new User(userDTO.getFirstname(), userDTO.getLastname(),
@@ -38,22 +36,13 @@ public class UserServiceImpl implements AuthService, AccountService {
                         this.passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail());
 
                 userRepository.save(user);
-
-                request.getSession().setAttribute("USERNAME", user.getUsername());
-                request.getSession().setAttribute("USER_ID", user.getUserId());
-
-                body = "Registration successful";
-                status = HttpStatus.OK;
-                return new ResponseEntity<>(body, status);
+                return user.getUserId();
             } else {
-                body = "Registration unsuccessful: Please double check all fields";
-                status = HttpStatus.BAD_REQUEST;
+                throw new IllegalRegistrationException("Registration unsuccessful: invalid fields");
             }
         } else {
-            body = "Registration unsuccessful: username already taken";
-            status = HttpStatus.BAD_REQUEST;
+            throw new IllegalRegistrationException("Registration unsuccessful: username already exists");
         }
-        return new ResponseEntity<>(body, status);
     }
 
     @Override
@@ -69,15 +58,16 @@ public class UserServiceImpl implements AuthService, AccountService {
         }
 
         try {
-            User user = userRepository.findOneByUserId((int) request.getSession().getAttribute("USER_ID"));
+            int uid = (int) request.getSession().getAttribute("USER_ID");
+            User user = userRepository.findOneByUserId(uid);
             userRepository.delete(user);
+            return ReturnConstants.simpleSuccess("Success: Account deleted", uid);
         }
         // TODO figure out what the two exceptions are (one for username not found and
         // one for failed delete, and handle errors separately)
         catch (Exception e) {
             return ReturnConstants.unknownError("Error: Delete failed");
         }
-        return ReturnConstants.simpleSuccess("Success: Account deleted");
     }
 
     @Override

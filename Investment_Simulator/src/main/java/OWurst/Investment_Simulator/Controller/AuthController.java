@@ -64,6 +64,16 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<ReturnDTO> logoutUser(HttpServletRequest request) {
+        if (request == null) {
+            return ResponseEntity.badRequest().body(ReturnConstants.badSession());
+        }
+
+        try {
+            request.getSession().getAttribute("USER_ID");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ReturnConstants.unverifiedSession());
+        }
+
         try {
             request.getSession().invalidate();
             return ResponseEntity.ok().body(ReturnConstants.simpleSuccess("Logout successful", -1));

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -106,5 +107,53 @@ public class AuthControllerUnitTest {
         } catch (Exception e) {
             fail();
         }
+    }
+
+    @SuppressWarnings("null")
+    @Test
+    public void testLogoutSuccessful() {
+        authController = new AuthController(authService);
+
+        try {
+            request.getSession().setAttribute("USER_ID", testUid);
+            request.getSession().setAttribute("USERNAME", "test_username");
+        } catch (Exception e) {
+            fail();
+        }
+
+        response = authController.logoutUser(request);
+        returnDTO = response.getBody();
+
+        expectedReturnDTO = ReturnConstants.simpleSuccess("Logout successful", -1);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedReturnDTO.getMsg(), returnDTO.getMsg());
+        assertEquals(expectedReturnDTO.getRespCode(), returnDTO.getRespCode());
+        assertEquals(expectedReturnDTO.getUid(), returnDTO.getUid());
+
+        session = request.getSession(false);
+        if (session != null) {
+            Object userId = request.getSession().getAttribute("USER_ID");
+            Object username = request.getSession().getAttribute("USERNAME");
+
+            assertNull(userId);
+            assertNull(username);
+        } else {
+        }
+    }
+
+    @Test
+    public void testLogoutIllegalStateException() {
+
+    }
+
+    @Test
+    public void testLogoutUnverifiedSession() {
+
+    }
+
+    @Test
+    public void testLogoutNullSession() {
+
     }
 }

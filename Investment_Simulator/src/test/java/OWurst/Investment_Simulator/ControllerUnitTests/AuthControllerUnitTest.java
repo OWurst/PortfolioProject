@@ -19,6 +19,7 @@ import OWurst.Investment_Simulator.DTO.ReturnDTO;
 import OWurst.Investment_Simulator.DTO.UserDTO;
 import OWurst.Investment_Simulator.Service.AuthService;
 import OWurst.Investment_Simulator.Utils.ReturnConstants;
+import OWurst.Investment_Simulator.Utils.InputExceptions.IllegalRegistrationException;
 import jakarta.servlet.http.HttpSession;
 
 @ExtendWith(MockitoExtension.class)
@@ -64,6 +65,40 @@ public class AuthControllerUnitTest {
             HttpSession session = request.getSession();
             assertEquals(testUid, session.getAttribute("USER_ID"));
             assertEquals(userDTO.getUsername(), session.getAttribute("USERNAME"));
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @SuppressWarnings("null")
+    @Test
+    public void testSaveUserOutputOnIllegalInputException() throws Exception {
+        AuthService authService = mock(AuthService.class);
+        when(authService.addUser(userDTO)).thenThrow(new IllegalRegistrationException("Test exception"));
+        AuthController authController = new AuthController(authService);
+
+        ResponseEntity<ReturnDTO> response = authController.saveUser(userDTO, request);
+
+        try {
+            assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+            assertEquals("Test exception", response.getBody().getErrorMsg());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @SuppressWarnings("null")
+    @Test
+    public void testSaveUserOutputOnUnknownException() throws Exception {
+        AuthService authService = mock(AuthService.class);
+        when(authService.addUser(userDTO)).thenThrow(new Exception("Test exception"));
+        AuthController authController = new AuthController(authService);
+
+        ResponseEntity<ReturnDTO> response = authController.saveUser(userDTO, request);
+
+        try {
+            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+            assertEquals("Test exception", response.getBody().getErrorMsg());
         } catch (Exception e) {
             fail();
         }

@@ -5,7 +5,7 @@ import java.util.List;
 // using build pattern to create return objects, as they will have a variable amount of return fields
 public class ReturnBuilder {
     private int uid;
-    private String errMsg;
+    private String errorMsg;
     private String msg;
     private int respCode;
     private List<StockDTO> stocks;
@@ -33,8 +33,8 @@ public class ReturnBuilder {
         return this;
     }
 
-    public ReturnBuilder withErrMsg(String errMsg) {
-        this.errMsg = errMsg;
+    public ReturnBuilder withErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
         return this;
     }
 
@@ -69,6 +69,6 @@ public class ReturnBuilder {
     }
 
     public ReturnDTO build() {
-        return new ReturnDTO(uid, errMsg, respCode, stocks, username, firstname, lastname, cash, msg, email);
+        return new ReturnDTO(uid, errorMsg, respCode, stocks, username, firstname, lastname, cash, msg, email);
     }
 }

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReturnDTO {
     private int uid;
-    private String errMsg;
+    private String errorMsg;
     private String msg;
     private int respCode;
     private List<StockDTO> stocks;
@@ -17,10 +17,10 @@ public class ReturnDTO {
     private double cash;
     private String email;
 
-    public ReturnDTO(int uid, String errMsg, int respCode, List<StockDTO> stocks, String username,
+    public ReturnDTO(int uid, String errorMsg, int respCode, List<StockDTO> stocks, String username,
             String firstname, String lastname, double cash, String msg, String email) {
         this.uid = uid;
-        this.errMsg = errMsg;
+        this.errorMsg = errorMsg;
         this.respCode = respCode;
         this.stocks = stocks;
         this.username = username;
@@ -39,8 +39,8 @@ public class ReturnDTO {
         return uid;
     }
 
-    public String getErrMsg() {
-        return errMsg;
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
     public String getMsg() {
@@ -87,7 +87,7 @@ public class ReturnDTO {
             return objectMapper.writeValueAsString(this);
         } catch (Exception e) {
             String resp = "{"
-                    + "\"errMsg\": \"Error converting ReturnDTO to JSON\","
+                    + "\"errorMsg\": \"Error converting ReturnDTO to JSON\","
                     + "\"respCode\": 500,"
                     + "\"uid\": " + this.uid
                     + "}";

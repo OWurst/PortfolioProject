@@ -25,11 +25,18 @@ import jakarta.servlet.http.HttpSession;
 @ExtendWith(MockitoExtension.class)
 
 public class AuthControllerUnitTest {
+    AuthController authController;
+    AuthService authService;
+
+    MockHttpServletRequest request;
+    HttpSession session;
+
     int testUid;
     UserDTO userDTO;
     LoginDTO loginDTO;
-
-    MockHttpServletRequest request;
+    ReturnDTO returnDTO;
+    ReturnDTO expectedReturnDTO;
+    ResponseEntity<ReturnDTO> response;
 
     @Before
     public void setUp() {
@@ -42,27 +49,26 @@ public class AuthControllerUnitTest {
         loginDTO.setUsername("test_username");
 
         request = new MockHttpServletRequest();
+        authService = mock(AuthService.class);
     }
 
-    @SuppressWarnings("null")
     @Test
     public void testSaveUserOutputOnSuccess() throws Exception {
-        AuthService authService = mock(AuthService.class);
         when(authService.addUser(userDTO)).thenReturn(testUid);
-        AuthController authController = new AuthController(authService);
+        authController = new AuthController(authService);
 
-        ResponseEntity<ReturnDTO> response = authController.saveUser(userDTO, request);
+        response = authController.saveUser(userDTO, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        ReturnDTO returnDTO = response.getBody();
-        ReturnDTO expectedReturnDTO = ReturnConstants.simpleSuccess("Account created successfully", testUid);
+        returnDTO = response.getBody();
+        expectedReturnDTO = ReturnConstants.simpleSuccess("Account created successfully", testUid);
 
         try {
             assertEquals(expectedReturnDTO.getMsg(), returnDTO.getMsg());
             assertEquals(expectedReturnDTO.getRespCode(), returnDTO.getRespCode());
             assertEquals(expectedReturnDTO.getUid(), returnDTO.getUid());
 
-            HttpSession session = request.getSession();
+            session = request.getSession();
             assertEquals(testUid, session.getAttribute("USER_ID"));
             assertEquals(userDTO.getUsername(), session.getAttribute("USERNAME"));
         } catch (Exception e) {
@@ -73,11 +79,10 @@ public class AuthControllerUnitTest {
     @SuppressWarnings("null")
     @Test
     public void testSaveUserOutputOnIllegalInputException() throws Exception {
-        AuthService authService = mock(AuthService.class);
         when(authService.addUser(userDTO)).thenThrow(new IllegalRegistrationException("Test exception"));
-        AuthController authController = new AuthController(authService);
+        authController = new AuthController(authService);
 
-        ResponseEntity<ReturnDTO> response = authController.saveUser(userDTO, request);
+        response = authController.saveUser(userDTO, request);
 
         try {
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -90,11 +95,10 @@ public class AuthControllerUnitTest {
     @SuppressWarnings("null")
     @Test
     public void testSaveUserOutputOnUnknownException() throws Exception {
-        AuthService authService = mock(AuthService.class);
         when(authService.addUser(userDTO)).thenThrow(new Exception("Test exception"));
-        AuthController authController = new AuthController(authService);
+        authController = new AuthController(authService);
 
-        ResponseEntity<ReturnDTO> response = authController.saveUser(userDTO, request);
+        response = authController.saveUser(userDTO, request);
 
         try {
             assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());

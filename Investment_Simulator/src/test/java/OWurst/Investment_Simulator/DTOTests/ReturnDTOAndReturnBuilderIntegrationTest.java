@@ -191,7 +191,7 @@ public class ReturnDTOAndReturnBuilderIntegrationTest {
         String result = returnDTO.toString();
         // return should be in json format and order does not matter
         assertTrue(result.contains("\"uid\":1"));
-        assertTrue(result.contains("\"errMsg\":\"errMsg\""));
+        assertTrue(result.contains("\"errorMsg\":\"errMsg\""));
         assertTrue(result.contains("\"respCode\":1"));
         assertTrue(result.contains("\"stocks\":[]"));
         assertTrue(result.contains("\"username\":\"username\""));
@@ -218,7 +218,7 @@ public class ReturnDTOAndReturnBuilderIntegrationTest {
         returnDTO = new ReturnDTO(0, null, 0, null, null, null, null, 0.0, null, null);
         String result = returnDTO.toString(true);
         String expected = "{"
-                + "\"errMsg\": \"Error converting ReturnDTO to JSON\","
+                + "\"errorMsg\": \"Error converting ReturnDTO to JSON\","
                 + "\"respCode\": 500,"
                 + "\"uid\": " + 0
                 + "}";

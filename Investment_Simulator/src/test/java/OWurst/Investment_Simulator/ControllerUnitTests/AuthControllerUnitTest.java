@@ -156,4 +156,19 @@ public class AuthControllerUnitTest {
     public void testLogoutNullSession() {
 
     }
+
+    @Test
+    public void testLoginUserSuccess() {
+
+    }
+
+    @Test
+    public void testLoginUserInvalidLoginException() {
+
+    }
+
+    @Test
+    public void testLoginUserUnknownException() {
+
+    }
 }

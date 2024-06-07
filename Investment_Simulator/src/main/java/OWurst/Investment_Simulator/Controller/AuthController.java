@@ -47,10 +47,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ReturnDTO> loginUser(@RequestBody LoginDTO loginDTO, HttpServletRequest request) {
-        String username = loginDTO.getUsername();
         int userId;
+        String username;
+
         try {
             userId = authService.loginUser(loginDTO);
+            username = loginDTO.getUsername();
         } catch (InvalidLoginException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ReturnConstants.handled400Error(e.getMessage()));
         } catch (Exception e) {

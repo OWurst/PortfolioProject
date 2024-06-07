@@ -45,7 +45,7 @@ public class ReturnDTOAndReturnBuilderIntegrationTest {
 
     @Test
     public void testGetErrMsg() {
-        assertEquals("errMsg", fullReturnDTO.getErrMsg());
+        assertEquals("errMsg", fullReturnDTO.getErrorMsg());
     }
 
     @Test
@@ -96,8 +96,8 @@ public class ReturnDTOAndReturnBuilderIntegrationTest {
 
     @Test
     public void testWithErrMsg() {
-        returnDTO = builder.withErrMsg("errMsg").build();
-        assertEquals("errMsg", returnDTO.getErrMsg());
+        returnDTO = builder.withErrorMsg("errMsg").build();
+        assertEquals("errMsg", returnDTO.getErrorMsg());
     }
 
     @Test
@@ -152,7 +152,7 @@ public class ReturnDTOAndReturnBuilderIntegrationTest {
     public void testWithAllFields() {
         returnDTO = builder
                 .withUid(1)
-                .withErrMsg("errMsg")
+                .withErrorMsg("errMsg")
                 .withRespCode(1)
                 .withStocks(stocks)
                 .withUsername("username")
@@ -163,7 +163,7 @@ public class ReturnDTOAndReturnBuilderIntegrationTest {
                 .build();
 
         assertEquals(fullReturnDTO.getUid(), returnDTO.getUid());
-        assertEquals(fullReturnDTO.getErrMsg(), returnDTO.getErrMsg());
+        assertEquals(fullReturnDTO.getErrorMsg(), returnDTO.getErrorMsg());
         assertEquals(fullReturnDTO.getRespCode(), returnDTO.getRespCode());
         assertEquals(fullReturnDTO.getStocks(), returnDTO.getStocks());
         assertEquals(fullReturnDTO.getUsername(), returnDTO.getUsername());
@@ -178,7 +178,7 @@ public class ReturnDTOAndReturnBuilderIntegrationTest {
     public void testReturnDTOToStringOnNormal() {
         returnDTO = builder
                 .withUid(1)
-                .withErrMsg("errMsg")
+                .withErrorMsg("errMsg")
                 .withRespCode(1)
                 .withStocks(stocks)
                 .withUsername("username")
